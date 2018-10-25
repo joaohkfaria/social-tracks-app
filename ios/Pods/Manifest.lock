@@ -1,0 +1,30 @@
+PODS:
+  - React (0.57.3):
+    - React/Core (= 0.57.3)
+  - React/Core (0.57.3):
+    - yoga (= 0.57.3.React)
+  - RNVectorIcons (6.0.2):
+    - React
+  - yoga (0.57.3.React)
+
+DEPENDENCIES:
+  - React (from `../node_modules/react-native`)
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
+
+EXTERNAL SOURCES:
+  React:
+    :path: "../node_modules/react-native"
+  RNVectorIcons:
+    :path: "../node_modules/react-native-vector-icons"
+  yoga:
+    :path: "../node_modules/react-native/ReactCommon/yoga"
+
+SPEC CHECKSUMS:
+  React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
+  RNVectorIcons: 8c52e1e8da1153613fdef44748e865c25556cb9c
+  yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
+
+PODFILE CHECKSUM: d1d622e8eeaa8bd566499d15b9d635898b569acb
+
+COCOAPODS: 1.5.3

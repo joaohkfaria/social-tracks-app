@@ -6,18 +6,14 @@ import ConnectTwitterScreen from './containers/ConnectTwitterScreen';
 import GroupsStack from './containers/GroupsStack';
 
 const RootStack = createSwitchNavigator({
-  HomeTabs: HomeTabs,
+  HomeTabs,
   ConnectSpotify: ConnectSpotifyScreen,
   ConnectTwitter: ConnectTwitterScreen,
-  GroupsStack: GroupsStack,
+  GroupsStack,
 }, {
   initialRouteName: 'ConnectSpotify',
 });
 
-class App extends React.Component {
-  render() {
-    return <RootStack />;
-  }
-}
+const App = () => <RootStack />;
 
 export default App;

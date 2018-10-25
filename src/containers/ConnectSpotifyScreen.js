@@ -1,19 +1,26 @@
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, Button } from 'react-native';
+import ConnectFull from '../components/ConnectFull';
 
 class ConnectSpotifyScreen extends React.Component {
-  render() {
-    const { navigation } = this.props;
+  constructor(props) {
+    super(props);
+    // Binding functions
+    this.handleConnectSpotify = this.handleConnectSpotify.bind(this);
+  }
 
+  handleConnectSpotify() {
+    // Navigate to Twitter Screen
+    const { navigation } = this.props;
+    navigation.navigate('ConnectTwitter');
+  }
+
+  render() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Connect Spotify Screen</Text>
-        <Button
-          title="Connect with Spotify"
-          onPress={() => navigation.navigate('ConnectTwitter')}
-        />
-      </View>
+      <ConnectFull
+        type="spotify"
+        handleConnect={this.handleConnectSpotify}
+      />
     );
   }
 }

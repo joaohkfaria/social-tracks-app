@@ -1,19 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { View, Text, Button } from 'react-native';
+import ConnectFull from '../components/ConnectFull';
 
 class ConnectTwitterScreen extends React.Component {
-  render() {
-    const { navigation } = this.props;
+  constructor(props) {
+    super(props);
+    // Binding functions
+    this.handleConnectTwitter = this.handleConnectTwitter.bind(this);
+  }
 
+  handleConnectTwitter() {
+    // Navigate to Twitter Screen
+    const { navigation } = this.props;
+    navigation.navigate('GroupsStack');
+  }
+
+  render() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Connect Twitter Screen</Text>
-        <Button
-          title="Connect with Twitter"
-          onPress={() => navigation.navigate('GroupsStack')}
-        />
-      </View>
+      <ConnectFull
+        type="twitter"
+        handleConnect={this.handleConnectTwitter}
+      />
     );
   }
 }
