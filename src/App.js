@@ -1,4 +1,5 @@
 import React from 'react';
+import { View, StatusBar } from 'react-native';
 import { createSwitchNavigator } from 'react-navigation';
 import HomeTabs from './containers/HomeTabs';
 import ConnectSpotifyScreen from './containers/ConnectSpotifyScreen';
@@ -14,6 +15,11 @@ const RootStack = createSwitchNavigator({
   initialRouteName: 'ConnectSpotify',
 });
 
-const App = () => <RootStack />;
+const App = () => (
+  <View style={{ flex: 1 }}>
+    <StatusBar barStyle="light-content" />
+    <RootStack />
+  </View>
+);
 
 export default App;

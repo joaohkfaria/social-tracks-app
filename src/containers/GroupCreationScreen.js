@@ -1,16 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, Button } from 'react-native';
+import { Text } from 'react-native';
+import PaddedLayout from '../layout/PaddedLayout';
+import PrimaryButton from '../components/PrimaryButton';
 
 const GroupCreationScreen = ({ navigation }) => (
-  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <Text>Group List Screen</Text>
-    <Button
-      title="Create Group"
+  <PaddedLayout>
+    <PrimaryButton
+      title="Create"
       onPress={() => navigation.navigate('GroupList')}
     />
-  </View>
+  </PaddedLayout>
 );
+
+GroupCreationScreen.navigationOptions = {
+  title: 'Create a Group',
+};
 
 GroupCreationScreen.propTypes = {
   navigation: PropTypes.object.isRequired,
