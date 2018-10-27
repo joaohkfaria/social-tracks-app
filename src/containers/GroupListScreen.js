@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import PrimaryButton from '../components/PrimaryButton';
 import PaddedLayout from '../layout/PaddedLayout';
 import GroupListItem from '../components/GroupListItem';
+import Colors from '../constants/Colors';
 
 const ActionContainer = styled(View)`
   flex-direction: row;
@@ -16,71 +17,63 @@ const ActionContainer = styled(View)`
 const ListContainer = styled(View)`
   flex: 1;
   flex-direction: column;
+  align-items: center;
 `;
 
 const mockGroups = [
   {
     id: '1',
     name: 'Work',
+    users: 'John, Leonard, Rose',
   },
   {
     id: '2',
     name: 'School',
+    users: 'John, Julie, Richard',
   },
   {
     id: '3',
     name: 'Friends',
+    users: 'Rick, Julian, Josie',
   },
 ];
 
-class GroupListScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    // Binding functions
-    this.handleCreateGroup = this.handleCreateGroup.bind(this);
-    this.handleSelectGroup = this.handleSelectGroup.bind(this);
-    this.renderGroupItem = this.renderGroupItem.bind(this);
-  }
+const GroupListScreen = ({ navigation }) => {
+  function renderGroupItem(listItem) {
+    const { item } = listItem;
 
-  handleSelectGroup() {
-    const { navigation } = this.props;
-    navigation.navigate('HomeTabs');
-  }
-
-  handleCreateGroup() {
-    const { navigation } = this.props;
-    navigation.navigate('GroupCreation');
-  }
-
-  renderGroupItem({ item }) {
     return (
       <GroupListItem
+        onPress={() => navigation.navigate('HomeTabs')}
         name={item.name}
+        description={item.users}
       />
     );
   }
 
-  render() {
-    return (
-      <PaddedLayout>
-        <ListContainer>
-          <Text>Group List Screen</Text>
-          <FlatList
-            data={mockGroups}
-            keyExtractor={item => item.id}
-            renderItem={this.renderGroupItem}
-          />
-        </ListContainer>
-        <ActionContainer>
-          <PrimaryButton
-            title="Create Group"
-            onPress={this.handleCreateGroup}
-          />
-        </ActionContainer>
-      </PaddedLayout>
-    );
-  }
-}
+  return (
+    <PaddedLayout>
+      <ListContainer>
+        <FlatList
+          data={mockGroups}
+          keyExtractor={item => item.id}
+          renderItem={renderGroupItem}
+          style={{ width: '100%', marginTop: 20 }}
+        />
+      </ListContainer>
+      <ActionContainer>
+        <PrimaryButton
+          title="Create Group"
+          onPress={() => navigation.navigate('GroupCreation')}
+        />
+      </ActionContainer>
+    </PaddedLayout>
+  );
+};
+
+GroupListScreen.navigationOptions = {
+  title: 'Select a Group',
+};
 
 GroupListScreen.propTypes = {
   navigation: PropTypes.object.isRequired,
