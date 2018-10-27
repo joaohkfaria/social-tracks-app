@@ -1,23 +1,83 @@
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, Button } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
+import styled from 'styled-components';
+import PrimaryButton from '../components/PrimaryButton';
+import PaddedLayout from '../layout/PaddedLayout';
+import GroupListItem from '../components/GroupListItem';
+
+const ActionContainer = styled(View)`
+  flex-direction: row;
+  width: 100%;
+  justify-content: flex-end;
+  margin-top: 20px;
+`;
+
+const ListContainer = styled(View)`
+  flex: 1;
+  flex-direction: column;
+`;
+
+const mockGroups = [
+  {
+    id: '1',
+    name: 'Work',
+  },
+  {
+    id: '2',
+    name: 'School',
+  },
+  {
+    id: '3',
+    name: 'Friends',
+  },
+];
 
 class GroupListScreen extends React.Component {
-  render() {
-    const { navigation } = this.props;
+  constructor(props) {
+    super(props);
+    // Binding functions
+    this.handleCreateGroup = this.handleCreateGroup.bind(this);
+    this.handleSelectGroup = this.handleSelectGroup.bind(this);
+    this.renderGroupItem = this.renderGroupItem.bind(this);
+  }
 
+  handleSelectGroup() {
+    const { navigation } = this.props;
+    navigation.navigate('HomeTabs');
+  }
+
+  handleCreateGroup() {
+    const { navigation } = this.props;
+    navigation.navigate('GroupCreation');
+  }
+
+  renderGroupItem({ item }) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Group List Screen</Text>
-        <Button
-          title="Select Group"
-          onPress={() => navigation.navigate('HomeTabs')}
-        />
-        <Button
-          title="Create Group"
-          onPress={() => navigation.navigate('GroupCreation')}
-        />
-      </View>
+      <GroupListItem
+        name={item.name}
+      />
+    );
+  }
+
+  render() {
+    return (
+      <PaddedLayout>
+        <ListContainer>
+          <Text>Group List Screen</Text>
+          <FlatList
+            data={mockGroups}
+            keyExtractor={item => item.id}
+            renderItem={this.renderGroupItem}
+          />
+        </ListContainer>
+        <ActionContainer>
+          <PrimaryButton
+            title="Create Group"
+            onPress={this.handleCreateGroup}
+          />
+        </ActionContainer>
+      </PaddedLayout>
     );
   }
 }

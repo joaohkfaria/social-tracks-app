@@ -8,7 +8,7 @@ import Icon from './Icon';
 const InsideContainer = styled(View)`
   align-items: center;
   justify-content: center;
-  padding: 7px;
+  padding: 10px;
   flex-direction: row;
   background-color: ${({ bgColor }) => Colors[bgColor]};
   border-radius: 3px;
