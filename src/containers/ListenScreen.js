@@ -3,6 +3,7 @@ import { FlatList } from 'react-native';
 import DefaultLayout from '../layout/DefaultLayout';
 import TrackItem from '../components/music/TrackItem';
 import Title from '../components/Title';
+import MusicPlayer from '../components/music/MusicPlayer';
 
 const mockTracks = [
   {
@@ -26,31 +27,76 @@ const mockTracks = [
 ];
 
 
-const ListenScreen = () => {
-  function renderItem(listItem) {
+class ListenScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    // Setting initial state
+    this.state = {
+      playingStatus: 'paused',
+      playingSong: null,
+    };
+    // Binding functions
+    this.handlePlayPlayer = this.handlePlayPlayer.bind(this);
+    this.handlePlaySong = this.handlePlaySong.bind(this);
+    this.renderItem = this.renderItem.bind(this);
+  }
+
+  handlePlayPlayer() {
+    const { playingStatus, playingSong } = this.state;
+
+    if (playingStatus === 'paused' && playingSong !== null) {
+      this.setState({ playingStatus: 'playing' });
+    } else {
+      this.setState({ playingStatus: 'paused' });
+    }
+  }
+
+  handlePlaySong(song) {
+    const { playingSong, playingStatus } = this.state;
+
+    this.setState({
+      playingStatus: playingSong && playingSong.id === song.id && playingStatus === 'playing' ? 'paused' : 'playing',
+      playingSong: song,
+    });
+  }
+
+  renderItem(listItem) {
     const { item } = listItem;
+    const { playingSong, playingStatus } = this.state;
 
     return (
       <TrackItem
         name={item.name}
         artist={item.artist}
         album={item.album}
-        playStatus={item.id === '1' ? 'playing' : 'none'}
+        playStatus={playingSong && item.id === playingSong.id ? playingStatus : 'none'}
+        onPress={() => this.handlePlaySong(item)}
       />
     );
   }
 
-  return (
-    <DefaultLayout padded paddingBar>
-      <Title>Made for Work group</Title>
-      <FlatList
-        data={mockTracks}
-        keyExtractor={item => item.id}
-        renderItem={renderItem}
-        style={{ width: '100%', marginTop: 20, flex: 1 }}
-      />
-    </DefaultLayout>
-  );
-};
+  render() {
+    const { playingStatus, playingSong } = this.state;
+
+    return (
+      <DefaultLayout padded paddingBar>
+        <Title>Made for Work group</Title>
+        <FlatList
+          data={mockTracks}
+          keyExtractor={item => item.id}
+          renderItem={this.renderItem}
+          style={{ width: '100%', marginTop: 20, flex: 1 }}
+        />
+        <MusicPlayer
+          name={playingSong ? playingSong.name : null}
+          album={playingSong ? playingSong.album : null}
+          artist={playingSong ? playingSong.artist : null}
+          playingStatus={playingStatus}
+          onPressPlay={this.handlePlayPlayer}
+        />
+      </DefaultLayout>
+    );
+  }
+}
 
 export default ListenScreen;
