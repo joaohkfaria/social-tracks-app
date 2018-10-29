@@ -14,11 +14,11 @@ const GroupsStack = createStackNavigator({
   navigationOptions: {
     headerStyle: {
       backgroundColor: Colors.default,
-      textTransform: 'uppercase',
+      // textTransform: 'uppercase',
     },
     headerTintColor: Colors.white,
     headerTitleStyle: {
-      textTransform: 'uppercase',
+      // textTransform: 'uppercase',
     },
   },
 });

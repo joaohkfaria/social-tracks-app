@@ -9,6 +9,7 @@ import Input from '../components/Input';
 
 const ButtonContainer = styled(View)`
   align-items: center;
+  margin-top: 20px;
 `;
 
 const items = [

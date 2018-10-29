@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import PrimaryButton from './PrimaryButton';
 import MusicBackground from '../images/music-background.jpeg';
 import SocialBackground from '../images/social-background.jpeg';
+import Colors from '../constants/Colors';
 
 const BackImage = styled(Image)`
   position: absolute;
@@ -17,10 +18,9 @@ const BackImage = styled(Image)`
 
 const Title = styled(Text)`
   font-size: 20px;
-  color: white;
+  color: ${Colors.white};
   margin-bottom: 10px;
   text-align: center;
-  text-transform: uppercase;
   font-weight: 400;
 `;
 
@@ -41,6 +41,7 @@ const Container = styled(View)`
 const TextContainer = styled(View)`
   flex: 1;
   padding: 22px;
+  flex-direction: column;
   justify-content: flex-end;
   align-items: center;
 `;
@@ -66,10 +67,10 @@ const ConnectFull = ({ type, handleConnect }) => {
   let title = '';
   let subtitle = '';
   if (type === 'spotify') {
-    title = 'Connect your Music';
+    title = 'CONNECT YOUR MUSIC';
     subtitle = 'Login with your Spotify account to listen to the perfect songs with your friends';
   } else if (type === 'twitter') {
-    title = 'Set your Social Network';
+    title = 'SET YOUR SOCIAL NETWORK';
     subtitle = 'Login with your Twitter account to listen to search for your friends and create your groups';
   }
 
