@@ -26,13 +26,14 @@ const Label = styled(Text)`
 const PrimaryButton = ({
   iconName, title,
   backgroundColor, onPress,
+  style,
 }) => (
   <TouchableHighlight
     title={title}
     onPress={onPress}
     underlayColor="#fff"
     activeOpacity={0.9}
-    style={{ borderRadius: 3 }}
+    style={{ ...style, borderRadius: 3 }}
   >
     <InsideContainer
       bgColor={backgroundColor}
@@ -59,6 +60,7 @@ PrimaryButton.propTypes = {
   onPress: PropTypes.func,
   backgroundColor: PropTypes.string,
   iconName: PropTypes.string,
+  style: PropTypes.object,
 };
 
 PrimaryButton.defaultProps = {
@@ -66,6 +68,7 @@ PrimaryButton.defaultProps = {
   onPress: () => null,
   backgroundColor: 'default',
   iconName: null,
+  style: {},
 };
 
 export default PrimaryButton;

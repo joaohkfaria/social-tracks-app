@@ -6,9 +6,13 @@ target 'SocialTracksApp' do
   # use_frameworks!
 
   # Pods for SocialTracksApp
-  pod 'React', :path => '../node_modules/react-native'
+  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
+  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+  pod 'React', :path => '../node_modules/react-native', :subspecs => [ 'Core', 'CxxBridge', 'DevSupport', 'RCTText', 'RCTImage', 'RCTNetwork', 'RCTWebSocket']
   pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
   target 'SocialTracksAppTests' do
     inherit! :search_paths

@@ -8,4 +8,5 @@ export default {
   white: '#fff',
   darkContrast: '#282828',
   defaultBackground: '#111',
+  green: 'green',
 };

@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -40,6 +41,7 @@
 		76A346FB69BA4BAD8AD0DF90 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 355F6B837EC0447FB410FDE7 /* FontAwesome5_Solid.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		869E4F388C387A9ECC2DA011 /* libPods-SocialTracksApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB03EF54E53F83EAC9A2ED1F /* libPods-SocialTracksApp.a */; };
+		90FA73F7218569B60089DA26 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 90FA73F6218569B60089DA26 /* libRNSVG.a */; };
 		94AE8905CC5242E0A814987B /* libRNVectorIcons-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F050F373A2AE4A69A8BEFEE2 /* libRNVectorIcons-tvOS.a */; };
 		969B390199EC4BB48AC021D6 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CB50D378951C4D268AF6BAA9 /* FontAwesome5_Brands.ttf */; };
 		A34B3A628A750B3B2F0FA87D /* libPods-SocialTracksApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6A1BDF6E581A3BE77E57317 /* libPods-SocialTracksApp-tvOS.a */; };
@@ -378,6 +380,7 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7A4E818CA86142748B5E0E0A /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		90FA73F6218569B60089DA26 /* libRNSVG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNSVG.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		97BC81786DC3447AB588768D /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		9E40AA824DE84CA78B0FE9E8 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		A6A1BDF6E581A3BE77E57317 /* libPods-SocialTracksApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SocialTracksApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -424,6 +427,7 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				90FA73F7218569B60089DA26 /* libRNSVG.a in Frameworks */,
 				50D5557515E540DAB083496C /* libRNVectorIcons.a in Frameworks */,
 				869E4F388C387A9ECC2DA011 /* libPods-SocialTracksApp.a in Frameworks */,
 			);
@@ -614,6 +618,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				90FA73F6218569B60089DA26 /* libRNSVG.a */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 				DB03EF54E53F83EAC9A2ED1F /* libPods-SocialTracksApp.a */,
 				A6A1BDF6E581A3BE77E57317 /* libPods-SocialTracksApp-tvOS.a */,
@@ -1195,20 +1200,9 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				FFF0F482D09844AD9D0CD9EB /* AntDesign.ttf in Resources */,
-				FA7C6C6FD7F643BFAF75F080 /* Entypo.ttf in Resources */,
-				F536E4542CE9474E895EF7E2 /* EvilIcons.ttf in Resources */,
-				F9D7C4576FBD492B83AC9E23 /* Feather.ttf in Resources */,
-				D5655D2BCE384D27BDF280CE /* FontAwesome.ttf in Resources */,
 				969B390199EC4BB48AC021D6 /* FontAwesome5_Brands.ttf in Resources */,
 				DF507FB4E4354DF9ACCEDC84 /* FontAwesome5_Regular.ttf in Resources */,
 				76A346FB69BA4BAD8AD0DF90 /* FontAwesome5_Solid.ttf in Resources */,
-				A752FA7A1602492B882886EA /* Foundation.ttf in Resources */,
-				DB72CEC73659444AB4DB71EB /* Ionicons.ttf in Resources */,
-				D4B129E0B293421ABEAB4C6E /* MaterialCommunityIcons.ttf in Resources */,
-				472EB7CE7EE9473B8CB25A4E /* MaterialIcons.ttf in Resources */,
-				20491F8771EB46DA9E3DF5B2 /* Octicons.ttf in Resources */,
-				2C80EF33B78F4BCE82AA1546 /* SimpleLineIcons.ttf in Resources */,
-				B368BC67A7E645579BF45ED7 /* Zocial.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

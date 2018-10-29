@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, FlatList } from 'react-native';
+import { View, FlatList } from 'react-native';
 import styled from 'styled-components';
 import PrimaryButton from '../components/PrimaryButton';
 import PaddedLayout from '../layout/PaddedLayout';
-import GroupListItem from '../components/GroupListItem';
-import Colors from '../constants/Colors';
+import ListItem from '../components/ListItem';
 
 const ActionContainer = styled(View)`
   flex-direction: row;
@@ -43,7 +42,7 @@ const GroupListScreen = ({ navigation }) => {
     const { item } = listItem;
 
     return (
-      <GroupListItem
+      <ListItem
         onPress={() => navigation.navigate('HomeTabs')}
         name={item.name}
         description={item.users}

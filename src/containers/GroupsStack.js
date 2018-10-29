@@ -10,6 +10,7 @@ const GroupsStack = createStackNavigator({
   },
   GroupCreation: GroupCreationScreen,
 }, {
+  initialRouteName: 'GroupList',
   navigationOptions: {
     headerStyle: {
       backgroundColor: Colors.default,
