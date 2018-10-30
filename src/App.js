@@ -12,7 +12,7 @@ const RootStack = createSwitchNavigator({
   ConnectTwitter: ConnectTwitterScreen,
   GroupsStack,
 }, {
-  initialRouteName: 'ConnectSpotify',
+  initialRouteName: 'HomeTabs',
 });
 
 const App = () => (

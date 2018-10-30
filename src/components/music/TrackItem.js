@@ -4,6 +4,7 @@ import {
   TouchableOpacity, View,
   Image, Text,
 } from 'react-native';
+import StarRating from 'react-native-star-rating';
 import styled from 'styled-components';
 import Colors from '../../constants/Colors';
 import Divider from '../Divider';
@@ -24,12 +25,12 @@ const TrackInfoContainer = styled(View)`
 `;
 
 const Title = styled(Text)`
-  color: ${Colors.white};
+  color: ${({ isPlaying }) => (isPlaying ? Colors.spotify : Colors.white)};
   font-size: 16px;
 `;
 
 const Artist = styled(Text)`
-  color: ${Colors.ultraLightGrey};
+  color: ${({ isPlaying }) => (isPlaying ? Colors.spotify : Colors.ultraLightGrey)};
   font-size: 12px;
 `;
 
@@ -38,15 +39,16 @@ const AlbumImage = styled(Image)`
   height: 50px;
 `;
 
-const playStatusIcon = {
-  playing: 'play',
-  paused: 'pause',
-};
+// const playStatusIcon = {
+//   playing: 'play',
+//   paused: 'pause',
+// };
 
 const TrackItem = ({
   onPress, name,
   artist, album,
   playStatus,
+  rating,
 }) => (
   <TouchableOpacity
     onPress={onPress}
@@ -56,13 +58,21 @@ const TrackItem = ({
       <Container>
         <AlbumImage source={{ uri: album }} />
         <TrackInfoContainer>
-          <Title>{name}</Title>
-          <Artist>{artist}</Artist>
+          <Title isPlaying={playStatus === 'playing'}>{name}</Title>
+          <Artist isPlaying={playStatus === 'playing'}>{artist}</Artist>
         </TrackInfoContainer>
-        {
+        {/* {
           playStatus !== 'none'
           && <Icon name={playStatusIcon[playStatus]} color="white" size={18} />
-        }
+        } */}
+        <StarRating
+          disabled
+          maxStars={5}
+          rating={rating}
+          fullStarColor={Colors.default}
+          emptyStarColor="transparent"
+          starSize={15}
+        />
       </Container>
       <Divider />
     </View>
@@ -75,11 +85,13 @@ TrackItem.propTypes = {
   album: PropTypes.string.isRequired,
   onPress: PropTypes.func,
   playStatus: PropTypes.string,
+  rating: PropTypes.number,
 };
 
 TrackItem.defaultProps = {
   onPress: () => null,
   playStatus: 'none',
+  rating: 0,
 };
 
 export default TrackItem;

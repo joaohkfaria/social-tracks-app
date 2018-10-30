@@ -34,6 +34,7 @@ class ListenScreen extends React.Component {
     this.state = {
       playingStatus: 'paused',
       playingSong: null,
+      ratings: {},
     };
     // Binding functions
     this.handlePlayPlayer = this.handlePlayPlayer.bind(this);
@@ -60,9 +61,23 @@ class ListenScreen extends React.Component {
     });
   }
 
+  handleChangeRating(rating) {
+    const { ratings, playingSong } = this.state;
+
+    if (!playingSong) return;
+
+    // Setting rating on songId
+    this.setState({
+      ratings: {
+        ...ratings,
+        [playingSong.id]: rating,
+      },
+    });
+  }
+
   renderItem(listItem) {
     const { item } = listItem;
-    const { playingSong, playingStatus } = this.state;
+    const { playingSong, playingStatus, ratings } = this.state;
 
     return (
       <TrackItem
@@ -71,12 +86,13 @@ class ListenScreen extends React.Component {
         album={item.album}
         playStatus={playingSong && item.id === playingSong.id ? playingStatus : 'none'}
         onPress={() => this.handlePlaySong(item)}
+        rating={ratings[item.id]}
       />
     );
   }
 
   render() {
-    const { playingStatus, playingSong } = this.state;
+    const { playingStatus, playingSong, ratings } = this.state;
 
     return (
       <DefaultLayout padded paddingBar>
@@ -93,6 +109,8 @@ class ListenScreen extends React.Component {
           artist={playingSong ? playingSong.artist : null}
           playingStatus={playingStatus}
           onPressPlay={this.handlePlayPlayer}
+          rating={playingSong ? ratings[playingSong.id] : null}
+          onChangeRating={newRating => this.handleChangeRating(newRating)}
         />
       </DefaultLayout>
     );
