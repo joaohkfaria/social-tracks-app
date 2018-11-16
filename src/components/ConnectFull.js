@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View, Image, Text } from 'react-native';
 import styled from 'styled-components';
+import Spinner from './Spinner';
 import PrimaryButton from './PrimaryButton';
 import MusicBackground from '../images/music-background.jpeg';
 import SocialBackground from '../images/social-background.jpeg';
@@ -35,7 +36,8 @@ const Container = styled(View)`
   flex: 1;
   justify-content: center;
   align-items: center;
-  flexDirection: column;
+  flex-direction: column;
+  background-color: ${Colors.defaultBackground};
 `;
 
 const TextContainer = styled(View)`
@@ -61,7 +63,15 @@ const Overlay = styled(View)`
   height: 100%;
 `;
 
-const ConnectFull = ({ type, handleConnect }) => {
+const ConnectFull = ({ loading, type, handleConnect }) => {
+  if (loading) {
+    return (
+      <Container>
+        <Spinner />
+      </Container>
+    );
+  }
+
   const label = type === 'spotify' ? 'Connect with Spotify' : 'Connect with Twitter';
   const backgroundImage = type === 'spotify' ? MusicBackground : SocialBackground;
   let title = '';
@@ -97,11 +107,13 @@ const ConnectFull = ({ type, handleConnect }) => {
 };
 
 ConnectFull.propTypes = {
+  loading: PropTypes.bool,
   type: PropTypes.string.isRequired,
   handleConnect: PropTypes.func,
 };
 
 ConnectFull.defaultProps = {
+  loading: false,
   handleConnect: () => null,
 };
 
