@@ -14,7 +14,7 @@ const settings = [
   {
     id: '2',
     name: 'Logout',
-    icon: 'sign-out',
+    icon: 'sign-out-alt',
     handleSelect: navigation => navigation.navigate('ConnectSpotify'),
   },
 ];

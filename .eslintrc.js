@@ -9,4 +9,7 @@ module.exports = {
         "react/forbid-prop-types": [1, { "forbid": ["any"] }],
         "import/prefer-default-export": "off",
     },
+    "globals": {
+        "fetch": true,
+    },
 };

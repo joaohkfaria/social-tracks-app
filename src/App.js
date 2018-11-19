@@ -3,13 +3,13 @@ import { View, StatusBar } from 'react-native';
 import { createSwitchNavigator } from 'react-navigation';
 import HomeTabs from './containers/HomeTabs';
 import ConnectSpotifyScreen from './containers/ConnectSpotifyScreen';
-import ConnectTwitterScreen from './containers/ConnectTwitterScreen';
 import GroupsStack from './containers/GroupsStack';
+import ConnectMastodonScreen from './containers/ConnectMastodonScreen';
 
 const RootStack = createSwitchNavigator({
   HomeTabs,
   ConnectSpotify: ConnectSpotifyScreen,
-  ConnectTwitter: ConnectTwitterScreen,
+  ConnectMastodon: ConnectMastodonScreen,
   GroupsStack,
 }, {
   initialRouteName: 'ConnectSpotify',

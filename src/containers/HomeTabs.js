@@ -18,8 +18,8 @@ const HomeTabs = createBottomTabNavigator(
         const { focused } = iconProps;
         const icons = {
           Listen: 'play-circle',
-          Statistics: 'bar-chart',
-          Settings: 'sliders',
+          Statistics: 'chart-pie',
+          Settings: 'sliders-h',
         };
 
         return (

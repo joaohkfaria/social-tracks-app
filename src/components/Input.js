@@ -5,26 +5,34 @@ import styled from 'styled-components';
 import Colors from '../constants/Colors';
 
 const StyledInput = styled(TextInput)`
-  background-color: ${Colors.white};
-  padding: 15px;
+  padding: 12px;
+  background: transparent;
+`;
+
+const InputView = styled(View)`
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 3px;
 `;
 
 const Label = styled(Text)`
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: 600;
   color: ${Colors.white};
   margin-bottom: 5px;
 `;
 
 const Input = ({ label, ...props }) => (
-  <View style={{ flexDirection: 'column' }}>
+  <View style={{ flexDirection: 'column', marginBottom: 5 }}>
     {
       label && (
         <Label>
-          {`${label}:`}
+          {`${label.toUpperCase()}:`}
         </Label>
       )
     }
-    <StyledInput {...props} />
+    <InputView>
+      <StyledInput {...props} />
+    </InputView>
   </View>
 );
 

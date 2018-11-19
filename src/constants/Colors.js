@@ -1,6 +1,7 @@
 export default {
   default: '#EE4444',
   twitter: '#1da1f2',
+  mastodon: '#2F93D7',
   facebook: '#3b5998',
   spotify: '#1db954',
   ultraLightGrey: '#dedede',

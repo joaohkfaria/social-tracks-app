@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Spotify from 'rn-spotify-sdk';
 import ConnectFull from '../components/ConnectFull';
-import { SPOTIFY_REDIRECT_URL, SPOTIFY_CLIENT_ID } from '../../config';
+import {
+  SPOTIFY_REDIRECT_URL, SPOTIFY_CLIENT_ID,
+  SPOTIFY_SWAP_URL, SPOTIFY_REFRESH_URL,
+  SPOTIFY_SCOPES,
+} from '../../config';
 import { loginSpotify } from '../services/UsersService';
 import { showOkAlert } from '../services/AlertService';
 
@@ -24,7 +28,9 @@ class ConnectSpotifyScreen extends React.Component {
       const spotify = await Spotify.initialize({
         clientID: SPOTIFY_CLIENT_ID,
         redirectURL: SPOTIFY_REDIRECT_URL,
-        scopes: ['streaming', 'user-follow-read', 'user-library-read'],
+        scopes: SPOTIFY_SCOPES,
+        tokenSwapURL: SPOTIFY_SWAP_URL,
+        tokenRefreshURL: SPOTIFY_REFRESH_URL,
       });
       if (spotify) this.setState({ isLoggedIn: true });
       else this.setState({ isLoading: false });
@@ -41,19 +47,20 @@ class ConnectSpotifyScreen extends React.Component {
 
   async handleIsLoggedIn() {
     const { navigation } = this.props;
-    // Sending data to API
-    const authData = await Spotify.getAuthAsync();
-    // If there's no auth data, show error
-    if (!authData) {
-      showOkAlert('Spotify', 'Cannot get auth data from Spotify, please, try again');
-      this.setState({ isLoggedIn: false, isLoading: false });
-      return;
-    }
     try {
+      // Sending data to API
+      const authData = await Spotify.getAuthAsync();
+      console.info('AUTH DATA', authData);
+      // If there's no auth data, the user is not logged in
+      if (!authData) {
+        this.setState({ isLoggedIn: false, isLoading: false });
+        return;
+      }
+      // Loggin with Spotify
       const response = await loginSpotify(authData.accessToken);
       console.info(response);
       // Navigate to Twitter Screen
-      navigation.navigate('ConnectTwitter');
+      navigation.navigate('ConnectMastodon');
     } catch (error) {
       console.info('ERROR LOGIN API', error);
       showOkAlert('Spotify', 'Cannot get authenticate with API, please, try again.');
@@ -64,10 +71,15 @@ class ConnectSpotifyScreen extends React.Component {
   async handleConnectSpotify() {
     // Set that is loading
     this.setState({ isLoading: true });
-    // Login with Spotify
-    const isLoggedIn = await Spotify.login();
-    // Setting new state
-    this.setState({ isLoggedIn });
+    try {
+      // Login with Spotify
+      const isLoggedIn = await Spotify.login();
+      // Setting new state
+      this.setState({ isLoggedIn });
+    } catch (error) {
+      console.info('Error logging in with Spotify', error);
+      showOkAlert('Spotify', 'Error logging in with Spotify, please, try again');
+    }
   }
 
   render() {

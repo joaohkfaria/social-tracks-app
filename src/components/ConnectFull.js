@@ -7,6 +7,7 @@ import PrimaryButton from './PrimaryButton';
 import MusicBackground from '../images/music-background.jpeg';
 import SocialBackground from '../images/social-background.jpeg';
 import Colors from '../constants/Colors';
+import Input from './Input';
 
 const BackImage = styled(Image)`
   position: absolute;
@@ -52,6 +53,7 @@ const ButtonContainer = styled(View)`
   flex: 1;
   padding: 22px;
   justify-content: flex-start;
+  min-width: 280px;
 `;
 
 const Overlay = styled(View)`
@@ -63,7 +65,12 @@ const Overlay = styled(View)`
   height: 100%;
 `;
 
-const ConnectFull = ({ loading, type, handleConnect }) => {
+const ConnectFull = ({
+  showInputs, loading,
+  type, handleConnect,
+  onChangeInput,
+  emailValue, passwordValue,
+}) => {
   if (loading) {
     return (
       <Container>
@@ -72,16 +79,16 @@ const ConnectFull = ({ loading, type, handleConnect }) => {
     );
   }
 
-  const label = type === 'spotify' ? 'Connect with Spotify' : 'Connect with Twitter';
+  const label = type === 'spotify' ? 'Connect with Spotify' : 'Login on Mastodon';
   const backgroundImage = type === 'spotify' ? MusicBackground : SocialBackground;
   let title = '';
   let subtitle = '';
   if (type === 'spotify') {
     title = 'CONNECT YOUR MUSIC';
     subtitle = 'Login with your Spotify account to listen to the perfect songs with your friends';
-  } else if (type === 'twitter') {
-    title = 'SET YOUR SOCIAL NETWORK';
-    subtitle = 'Login with your Twitter account to listen to search for your friends and create your groups';
+  } else if (type === 'mastodon') {
+    title = 'CONNECT MASTODON ACCOUNT';
+    subtitle = 'Login with your Mastodon account to search for your friends and create your groups';
   }
 
   return (
@@ -95,6 +102,26 @@ const ConnectFull = ({ loading, type, handleConnect }) => {
         <Subtitle>{subtitle}</Subtitle>
       </TextContainer>
       <ButtonContainer>
+        {
+          showInputs
+          && (
+            <View style={{ marginBottom: 20 }}>
+              <Input
+                label="Email"
+                autoCapitalize="none"
+                keyboardType="email-address"
+                onChangeText={text => onChangeInput('email', text)}
+                value={emailValue}
+              />
+              <Input
+                label="Password"
+                secureTextEntry
+                onChangeText={text => onChangeInput('password', text)}
+                value={passwordValue}
+              />
+            </View>
+          )
+        }
         <PrimaryButton
           title={label}
           onPress={handleConnect}
@@ -110,11 +137,19 @@ ConnectFull.propTypes = {
   loading: PropTypes.bool,
   type: PropTypes.string.isRequired,
   handleConnect: PropTypes.func,
+  showInputs: PropTypes.bool,
+  onChangeInput: PropTypes.func,
+  emailValue: PropTypes.string,
+  passwordValue: PropTypes.string,
 };
 
 ConnectFull.defaultProps = {
   loading: false,
+  showInputs: false,
   handleConnect: () => null,
+  onChangeInput: () => null,
+  emailValue: '',
+  passwordValue: '',
 };
 
 export default ConnectFull;

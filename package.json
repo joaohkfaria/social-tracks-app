@@ -8,8 +8,8 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "isomorphic-fetch": "^2.2.1",
     "prop-types": "^15.6.2",
+    "query-string": "^6.2.0",
     "react": "^16.6.0",
     "react-native": "0.57.4",
     "react-native-iphone-x-helper": "^1.2.0",
