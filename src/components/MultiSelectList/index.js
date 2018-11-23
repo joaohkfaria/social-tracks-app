@@ -3,20 +3,20 @@ import PropTypes from 'prop-types';
 import { FlatList } from 'react-native';
 import MultiSelectListItem from './MultiSelectListItem';
 
-const MultiSelectList = ({ items, selectedItems, onChangeSelected }) => {
+const MultiSelectList = ({ items, selectedItemsIds, onChangeSelected }) => {
   function handleSelectItem(itemId) {
-    const itemIndex = selectedItems.indexOf(itemId);
+    const itemIndex = selectedItemsIds.indexOf(itemId);
     // If contains the item, remove it
     if (itemIndex !== -1) {
       onChangeSelected([
-        ...selectedItems.slice(0, itemIndex),
-        ...selectedItems.slice(itemIndex + 1),
+        ...selectedItemsIds.slice(0, itemIndex),
+        ...selectedItemsIds.slice(itemIndex + 1),
       ]);
       return;
     }
     // Add the item on list
     onChangeSelected([
-      ...selectedItems,
+      ...selectedItemsIds,
       itemId,
     ]);
   }
@@ -26,11 +26,11 @@ const MultiSelectList = ({ items, selectedItems, onChangeSelected }) => {
 
     return (
       <MultiSelectListItem
-        id={item.id}
+        id={item._id}
         name={item.name}
         onSelect={id => handleSelectItem(id)}
-        selected={selectedItems.indexOf(item.id) !== -1}
-        avatar={item.avatar}
+        selected={selectedItemsIds.indexOf(item._id) !== -1}
+        avatar={item.avatar_url}
       />
     );
   }
@@ -38,7 +38,7 @@ const MultiSelectList = ({ items, selectedItems, onChangeSelected }) => {
   return (
     <FlatList
       data={items}
-      keyExtractor={item => item.id}
+      keyExtractor={item => item._id}
       renderItem={renderItem}
       style={{ width: '100%', marginTop: 20, flex: 1 }}
     />
@@ -47,12 +47,12 @@ const MultiSelectList = ({ items, selectedItems, onChangeSelected }) => {
 
 MultiSelectList.propTypes = {
   items: PropTypes.array.isRequired,
-  selectedItems: PropTypes.array,
+  selectedItemsIds: PropTypes.array,
   onChangeSelected: PropTypes.func.isRequired,
 };
 
 MultiSelectList.defaultProps = {
-  selectedItems: [],
+  selectedItemsIds: [],
 };
 
 export default MultiSelectList;

@@ -7,7 +7,7 @@ import {
   SPOTIFY_SWAP_URL, SPOTIFY_REFRESH_URL,
   SPOTIFY_SCOPES,
 } from '../../config';
-import { loginSpotify } from '../services/UsersService';
+import { loginSpotify, saveUser, getUser } from '../services/UsersService';
 import { showOkAlert } from '../services/AlertService';
 
 class ConnectSpotifyScreen extends React.Component {
@@ -21,10 +21,12 @@ class ConnectSpotifyScreen extends React.Component {
     // Binding functions
     this.handleConnectSpotify = this.handleConnectSpotify.bind(this);
     this.handleIsLoggedIn = this.handleIsLoggedIn.bind(this);
+    this.goNext = this.goNext.bind(this);
   }
 
   async componentDidMount() {
     try {
+      // Initializing Spotify
       const spotify = await Spotify.initialize({
         clientID: SPOTIFY_CLIENT_ID,
         redirectURL: SPOTIFY_REDIRECT_URL,
@@ -32,7 +34,11 @@ class ConnectSpotifyScreen extends React.Component {
         tokenSwapURL: SPOTIFY_SWAP_URL,
         tokenRefreshURL: SPOTIFY_REFRESH_URL,
       });
-      if (spotify) this.setState({ isLoggedIn: true });
+      // Trying to get user from Async Storage
+      const user = await getUser();
+      // If the user exists and has a Spotify ID, just go next
+      if (user && user.spotify_id) this.goNext();
+      else if (spotify) this.setState({ isLoggedIn: true });
       else this.setState({ isLoading: false });
     } catch (error) {
       showOkAlert('Spotify', 'Cannot initialize Spotify, please, restart the app and try again');
@@ -45,8 +51,13 @@ class ConnectSpotifyScreen extends React.Component {
     if (!prevState.isLoggedIn && isLoggedIn) this.handleIsLoggedIn();
   }
 
-  async handleIsLoggedIn() {
+  goNext() {
     const { navigation } = this.props;
+    // Navigate to Twitter Screen
+    navigation.navigate('ConnectMastodon');
+  }
+
+  async handleIsLoggedIn() {
     try {
       // Sending data to API
       const authData = await Spotify.getAuthAsync();
@@ -58,9 +69,11 @@ class ConnectSpotifyScreen extends React.Component {
       }
       // Loggin with Spotify
       const response = await loginSpotify(authData.accessToken);
-      console.info(response);
-      // Navigate to Twitter Screen
-      navigation.navigate('ConnectMastodon');
+      const { user } = response;
+      // If there's no user on response, thorw error
+      if (!user) throw new Error('No user found');
+      // Saving user data
+      await saveUser(user);
     } catch (error) {
       console.info('ERROR LOGIN API', error);
       showOkAlert('Spotify', 'Cannot get authenticate with API, please, try again.');

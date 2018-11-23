@@ -8,6 +8,7 @@ module.exports = {
         "jsx-a11y/label-has-for": 0,
         "react/forbid-prop-types": [1, { "forbid": ["any"] }],
         "import/prefer-default-export": "off",
+        "no-underscore-dangle": "off",
     },
     "globals": {
         "fetch": true,

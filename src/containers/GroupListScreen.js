@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import PrimaryButton from '../components/PrimaryButton';
 import PaddedLayout from '../layout/PaddedLayout';
 import ListItem from '../components/ListItem';
+import { getGroups } from '../services/GroupsServices';
+import Spinner from '../components/Spinner';
 
 const ActionContainer = styled(View)`
   flex-direction: row;
@@ -19,56 +21,85 @@ const ListContainer = styled(View)`
   align-items: center;
 `;
 
-const mockGroups = [
-  {
-    id: '1',
-    name: 'Work',
-    users: 'John, Leonard, Rose',
-  },
-  {
-    id: '2',
-    name: 'School',
-    users: 'John, Julie, Richard',
-  },
-  {
-    id: '3',
-    name: 'Friends',
-    users: 'Rick, Julian, Josie',
-  },
-];
-
-const GroupListScreen = ({ navigation }) => {
-  function renderGroupItem(listItem) {
-    const { item } = listItem;
-
-    return (
-      <ListItem
-        onPress={() => navigation.navigate('HomeTabs')}
-        name={item.name}
-        description={item.users}
-      />
-    );
+class GroupListScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      groups: [],
+      isLoading: true,
+      error: false,
+    };
   }
 
-  return (
-    <PaddedLayout>
-      <ListContainer>
-        <FlatList
-          data={mockGroups}
-          keyExtractor={item => item.id}
-          renderItem={renderGroupItem}
-          style={{ width: '100%', marginTop: 20 }}
+  componentDidMount() {
+    // When mounting, get groups
+    this.getGroups();
+  }
+
+  async getGroups() {
+    // Setting that we're loading
+    this.setState({ isLoading: true });
+    try {
+      // Getting groups
+      const { groups } = await getGroups();
+      this.setState({ groups, isLoading: false });
+    } catch (error) {
+      this.setState({ error: true, isLoading: false });
+      console.info(error);
+    }
+  }
+
+  render() {
+    const { navigation } = this.props;
+    const { groups, isLoading, error } = this.state;
+
+    function renderGroupItem(listItem) {
+      const { item } = listItem;
+
+      return (
+        <ListItem
+          onPress={() => navigation.navigate('HomeTabs')}
+          name={item.name}
+          description={item.users.map(user => user.name).join(', ')}
         />
-      </ListContainer>
-      <ActionContainer>
-        <PrimaryButton
-          title="Create Group"
-          onPress={() => navigation.navigate('GroupCreation')}
-        />
-      </ActionContainer>
-    </PaddedLayout>
-  );
-};
+      );
+    }
+
+    if (isLoading) {
+      return (
+        <PaddedLayout>
+          <Spinner />
+        </PaddedLayout>
+      );
+    }
+
+    if (error) {
+      return (
+        <PaddedLayout>
+        </PaddedLayout>
+      );
+    }
+
+    return (
+      <PaddedLayout>
+        <ListContainer>
+          <FlatList
+            data={groups}
+            keyExtractor={item => item._id}
+            renderItem={renderGroupItem}
+            style={{ width: '100%', marginTop: 20 }}
+          />
+        </ListContainer>
+        <ActionContainer>
+          <PrimaryButton
+            title="Create Group"
+            onPress={() => navigation.navigate('GroupCreation')}
+          />
+        </ActionContainer>
+      </PaddedLayout>
+    );
+  }
+}
 
 GroupListScreen.navigationOptions = {
   title: 'Select a Group',
