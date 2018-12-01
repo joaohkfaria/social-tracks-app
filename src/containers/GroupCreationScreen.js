@@ -7,7 +7,7 @@ import MultiSelectList from '../components/MultiSelectList';
 import Input from '../components/Input';
 import { getFriends } from '../services/FriendsService';
 import { createGroup } from '../services/GroupsServices';
-import PaddedLayout from '../layout/PaddedLayout';
+import DefaultLayout from '../layout/DefaultLayout';
 import Spinner from '../components/Spinner';
 import { showOkAlert } from '../services/AlertService';
 import ErrorMessage from '../components/ErrorMessage';
@@ -94,22 +94,22 @@ class GroupCreationScreen extends React.Component {
 
     if (isGettingFriends || isCreatingGroup) {
       return (
-        <PaddedLayout>
+        <DefaultLayout padded>
           <Spinner />
-        </PaddedLayout>
+        </DefaultLayout>
       );
     }
 
     if (errorGettingFriends) {
       return (
-        <PaddedLayout>
+        <DefaultLayout padded>
           <ErrorMessage onRetry={() => this.getFriends()} />
-        </PaddedLayout>
+        </DefaultLayout>
       );
     }
 
     return (
-      <PaddedLayout>
+      <DefaultLayout padded>
         <View style={{ marginTop: 20 }}>
           <Input
             onChangeText={text => this.setState({ groupName: text })}
@@ -130,7 +130,7 @@ class GroupCreationScreen extends React.Component {
             style={{ width: 200 }}
           />
         </ButtonContainer>
-      </PaddedLayout>
+      </DefaultLayout>
     );
   }
 }

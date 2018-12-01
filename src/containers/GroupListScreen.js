@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { View, FlatList } from 'react-native';
 import styled from 'styled-components';
 import PrimaryButton from '../components/PrimaryButton';
-import PaddedLayout from '../layout/PaddedLayout';
+import DefaultLayout from '../layout/DefaultLayout';
 import ListItem from '../components/ListItem';
 import { getGroups } from '../services/GroupsServices';
 import Spinner from '../components/Spinner';
@@ -69,22 +69,22 @@ class GroupListScreen extends React.Component {
 
     if (isLoading) {
       return (
-        <PaddedLayout>
+        <DefaultLayout>
           <Spinner />
-        </PaddedLayout>
+        </DefaultLayout>
       );
     }
 
     if (error) {
       return (
-        <PaddedLayout>
+        <DefaultLayout padded>
           <ErrorMessage onRetry={() => this.getGroups()} />
-        </PaddedLayout>
+        </DefaultLayout>
       );
     }
 
     return (
-      <PaddedLayout>
+      <DefaultLayout padded>
         <ListContainer>
           {groups.length === 0 && <NoItemText />}
           <FlatList
@@ -100,7 +100,7 @@ class GroupListScreen extends React.Component {
             onPress={() => navigation.navigate('GroupCreation')}
           />
         </ActionContainer>
-      </PaddedLayout>
+      </DefaultLayout>
     );
   }
 }
