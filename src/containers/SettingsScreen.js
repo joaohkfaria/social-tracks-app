@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FlatList } from 'react-native';
+import Spotify from 'rn-spotify-sdk';
 import DefaultLayout from '../layout/DefaultLayout';
 import ListItem from '../components/ListItem';
+import { logout } from '../services/UsersService';
 
 const settings = [
   {
@@ -15,7 +17,14 @@ const settings = [
     id: '2',
     name: 'Logout',
     icon: 'sign-out-alt',
-    handleSelect: navigation => navigation.navigate('ConnectSpotify'),
+    handleSelect: async (navigation) => {
+      // Logout Spotify
+      await Spotify.logout();
+      // Logout user
+      await logout();
+      // Going to Spotify
+      navigation.navigate('ConnectSpotify');
+    },
   },
 ];
 
