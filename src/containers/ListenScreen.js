@@ -1,31 +1,14 @@
 import React from 'react';
 import { FlatList } from 'react-native';
+import Spotify from 'rn-spotify-sdk';
 import DefaultLayout from '../layout/DefaultLayout';
 import TrackItem from '../components/music/TrackItem';
 import Title from '../components/Title';
 import MusicPlayer from '../components/music/MusicPlayer';
-
-const mockTracks = [
-  {
-    id: '1',
-    name: 'Money',
-    artist: 'Pink Floyd',
-    album: 'https://upload.wikimedia.org/wikipedia/pt/3/3b/Dark_Side_of_the_Moon.png',
-  },
-  {
-    id: '2',
-    name: 'Heaven and Hell',
-    artist: 'Black Sabbath',
-    album: 'https://upload.wikimedia.org/wikipedia/en/f/f8/Black_Sabbath_Heaven_and_Hell.jpg',
-  },
-  {
-    id: '3',
-    name: 'Highway to Hell',
-    artist: 'AC/DC',
-    album: 'https://upload.wikimedia.org/wikipedia/pt/thumb/a/ac/Acdc_Highway_to_Hell.JPG/220px-Acdc_Highway_to_Hell.JPG',
-  },
-];
-
+import Spinner from '../components/Spinner';
+import { getRecommendations } from '../services/RecommendationsServices';
+import { getRatings, createRating, formatRatingsObj } from '../services/RatingService';
+import { showOkAlert } from '../services/AlertService';
 
 class ListenScreen extends React.Component {
   constructor(props) {
@@ -35,6 +18,9 @@ class ListenScreen extends React.Component {
       playingStatus: 'paused',
       playingSong: null,
       ratings: {},
+      recommendations: [],
+      isLoadingRecommendations: true,
+      errorLoadingRecommendations: false,
     };
     // Binding functions
     this.handlePlayPlayer = this.handlePlayPlayer.bind(this);
@@ -42,37 +28,80 @@ class ListenScreen extends React.Component {
     this.renderItem = this.renderItem.bind(this);
   }
 
-  handlePlayPlayer() {
-    const { playingStatus, playingSong } = this.state;
+  componentDidMount() {
+    // Getting recommendations
+    this.getRecommendations();
+  }
 
-    if (playingStatus === 'paused' && playingSong !== null) {
-      this.setState({ playingStatus: 'playing' });
-    } else {
-      this.setState({ playingStatus: 'paused' });
+  async getRecommendations() {
+    try {
+      // Setting is loading
+      this.setState({ isLoadingRecommendations: true });
+      // TODO: Get group id
+      const { recommendations } = await getRecommendations('1');
+      // Getting ratings
+      const { ratings } = await getRatings();
+      // Generating ratings in object format
+      const ratingsObj = formatRatingsObj(ratings);
+      // Setting recommendations
+      this.setState({
+        recommendations,
+        isLoadingRecommendations: false,
+        ratings: ratingsObj,
+      });
+    } catch (error) {
+      // Setting error
+      this.setState({ errorLoadingRecommendations : true, isLoadingRecommendations: false });
     }
   }
 
-  handlePlaySong(song) {
+  handlePlayPlayer() {
+    const { playingStatus, playingSong } = this.state;
+    // Getting new playing status
+    const newPlayingStatus = playingSong && playingStatus === 'playing' ? 'paused' : 'playing';
+
+    // Set playing status
+    Spotify.setPlaying(newPlayingStatus === 'playing');
+    // Setting new state
+    this.setState({ playingStatus: newPlayingStatus });
+  }
+
+  async handlePlaySong(song) {
+    // Getting state
     const { playingSong, playingStatus } = this.state;
+    const newPlayingStatus = playingSong && playingSong.id === song.id && playingStatus === 'playing' ? 'paused' : 'playing';
+
+    // If it's a diferent song, set the spotify url from beggining
+    if (!playingSong || playingSong.id !== song.id) {
+      Spotify.playURI(song.uri, 0, 0);
+    }
+    // Set playing status
+    Spotify.setPlaying(newPlayingStatus === 'playing');
 
     this.setState({
-      playingStatus: playingSong && playingSong.id === song.id && playingStatus === 'playing' ? 'paused' : 'playing',
       playingSong: song,
+      playingStatus: newPlayingStatus,
     });
   }
 
-  handleChangeRating(rating) {
+  async handleChangeRating(ratingValue) {
     const { ratings, playingSong } = this.state;
-
+    // If it's not the current playing song, just ignore it
     if (!playingSong) return;
-
-    // Setting rating on songId
-    this.setState({
-      ratings: {
-        ...ratings,
-        [playingSong.id]: rating,
-      },
-    });
+    try {
+      // Setting rating on songId
+      this.setState({
+        ratings: { ...ratings, [playingSong.id]: ratingValue },
+      });
+      // Creating rating
+      await createRating(playingSong.id, ratingValue);
+    } catch (error) {
+      // Setting previous rate again
+      this.setState({
+        ratings: { ...ratings, [playingSong.id]: ratings[playingSong.id] },
+      });
+      showOkAlert('Setting Rating', 'Unable to set rating for this song, please, try again');
+    }
   }
 
   renderItem(listItem) {
@@ -82,8 +111,8 @@ class ListenScreen extends React.Component {
     return (
       <TrackItem
         name={item.name}
-        artist={item.artist}
-        album={item.album}
+        artist={item.artists.map(artist => artist.name).join(', ')}
+        album={item.album.images[0].url}
         playStatus={playingSong && item.id === playingSong.id ? playingStatus : 'none'}
         onPress={() => this.handlePlaySong(item)}
         rating={ratings[item.id]}
@@ -92,21 +121,39 @@ class ListenScreen extends React.Component {
   }
 
   render() {
-    const { playingStatus, playingSong, ratings } = this.state;
+    const {
+      playingStatus, playingSong, ratings,
+      isLoadingRecommendations, errorLoadingRecommendations,
+      recommendations,
+    } = this.state;
+
+    if (isLoadingRecommendations) {
+      return (
+        <DefaultLayout padded paddingBar>
+          <Spinner />
+        </DefaultLayout>
+      );
+    }
+
+    if (errorLoadingRecommendations) {
+      return (
+        <DefaultLayout padded paddingBar />
+      );
+    }
 
     return (
       <DefaultLayout padded paddingBar>
-        <Title>Made for Work group</Title>
+        <Title>Made for your group</Title>
         <FlatList
-          data={mockTracks}
+          data={recommendations}
           keyExtractor={item => item.id}
           renderItem={this.renderItem}
           style={{ width: '100%', marginTop: 20, flex: 1 }}
         />
         <MusicPlayer
           name={playingSong ? playingSong.name : null}
-          album={playingSong ? playingSong.album : null}
-          artist={playingSong ? playingSong.artist : null}
+          album={playingSong ? playingSong.album.images[0].url : null}
+          artist={playingSong ? playingSong.artists.map(artist => artist.name).join(', ') : null}
           playingStatus={playingStatus}
           onPressPlay={this.handlePlayPlayer}
           rating={playingSong ? ratings[playingSong.id] : null}
