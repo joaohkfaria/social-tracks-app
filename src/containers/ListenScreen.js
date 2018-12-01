@@ -9,6 +9,7 @@ import Spinner from '../components/Spinner';
 import { getRecommendations } from '../services/RecommendationsServices';
 import { getRatings, createRating, formatRatingsObj } from '../services/RatingService';
 import { showOkAlert } from '../services/AlertService';
+import ErrorMessage from '../components/ErrorMessage';
 
 class ListenScreen extends React.Component {
   constructor(props) {
@@ -36,7 +37,7 @@ class ListenScreen extends React.Component {
   async getRecommendations() {
     try {
       // Setting is loading
-      this.setState({ isLoadingRecommendations: true });
+      this.setState({ isLoadingRecommendations: true, errorLoadingRecommendations: false });
       // TODO: Get group id
       const { recommendations } = await getRecommendations('1');
       // Getting ratings
@@ -47,6 +48,7 @@ class ListenScreen extends React.Component {
       this.setState({
         recommendations,
         isLoadingRecommendations: false,
+        errorLoadingRecommendations: false,
         ratings: ratingsObj,
       });
     } catch (error) {
@@ -137,7 +139,9 @@ class ListenScreen extends React.Component {
 
     if (errorLoadingRecommendations) {
       return (
-        <DefaultLayout padded paddingBar />
+        <DefaultLayout padded paddingBar>
+          <ErrorMessage onRetry={() => this.getRecommendations()} />
+        </DefaultLayout>
       );
     }
 
