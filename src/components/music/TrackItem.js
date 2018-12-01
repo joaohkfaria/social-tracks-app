@@ -8,7 +8,6 @@ import StarRating from 'react-native-star-rating';
 import styled from 'styled-components';
 import Colors from '../../constants/Colors';
 import Divider from '../Divider';
-import Icon from '../Icon';
 
 const Container = styled(View)`
   padding: 10px;

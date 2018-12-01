@@ -51,7 +51,7 @@ class ListenScreen extends React.Component {
       });
     } catch (error) {
       // Setting error
-      this.setState({ errorLoadingRecommendations : true, isLoadingRecommendations: false });
+      this.setState({ errorLoadingRecommendations: true, isLoadingRecommendations: false });
     }
   }
 
