@@ -7,6 +7,8 @@ import PaddedLayout from '../layout/PaddedLayout';
 import ListItem from '../components/ListItem';
 import { getGroups } from '../services/GroupsServices';
 import Spinner from '../components/Spinner';
+import NoItemText from '../components/NoItemText';
+import ErrorMessage from '../components/ErrorMessage';
 
 const ActionContainer = styled(View)`
   flex-direction: row;
@@ -29,11 +31,11 @@ class GroupListScreen extends React.Component {
       isLoading: true,
       error: false,
     };
-  }
 
-  componentDidMount() {
-    // When mounting, get groups
-    this.getGroups();
+    props.navigation.addListener(
+      'willFocus',
+      () => this.getGroups(),
+    );
   }
 
   async getGroups() {
@@ -76,6 +78,7 @@ class GroupListScreen extends React.Component {
     if (error) {
       return (
         <PaddedLayout>
+          <ErrorMessage onRetry={() => this.getGroups()} />
         </PaddedLayout>
       );
     }
@@ -83,6 +86,7 @@ class GroupListScreen extends React.Component {
     return (
       <PaddedLayout>
         <ListContainer>
+          {groups.length === 0 && <NoItemText />}
           <FlatList
             data={groups}
             keyExtractor={item => item._id}
