@@ -26,7 +26,7 @@ const spotifySwapUrl = {
 };
 export const SPOTIFY_REFRESH_URL = spotifyRefreshUrl.development;
 export const SPOTIFY_SWAP_URL = spotifySwapUrl.development;
-export const SPOTIFY_SCOPES = ['streaming', 'user-follow-read', 'user-library-read', 'user-top-read'];
+export const SPOTIFY_SCOPES = ['streaming', 'user-follow-read', 'user-library-read', 'user-top-read', 'user-read-email'];
 
 /**
  * MASTODON CONFIG
