@@ -27,7 +27,8 @@ class ConnectSpotifyScreen extends React.Component {
   async componentDidMount() {
     try {
       // Initializing Spotify
-      const spotify = await Spotify.initialize({
+      const spotify = await Spotify.isInitializedAsync()
+      || await Spotify.initialize({
         clientID: SPOTIFY_CLIENT_ID,
         redirectURL: SPOTIFY_REDIRECT_URL,
         scopes: SPOTIFY_SCOPES,
@@ -37,10 +38,11 @@ class ConnectSpotifyScreen extends React.Component {
       // Trying to get user from Async Storage
       const user = await getUser();
       // If the user exists and has a Spotify ID, just go next
-      if (user && user.spotify_id) this.goNext();
+      if (spotify && user && user.spotify_id) this.goNext();
       else if (spotify) this.setState({ isLoggedIn: true });
       else this.setState({ isLoading: false });
     } catch (error) {
+      console.info(error);
       showOkAlert('Spotify', 'Cannot initialize Spotify, please, restart the app and try again');
     }
   }
@@ -74,6 +76,8 @@ class ConnectSpotifyScreen extends React.Component {
       if (!user) throw new Error('No user found');
       // Saving user data
       await saveUser(user);
+      // Go next
+      this.goNext();
     } catch (error) {
       console.info('ERROR LOGIN API', error);
       showOkAlert('Spotify', 'Cannot get authenticate with API, please, try again.');
