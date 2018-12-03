@@ -39,14 +39,14 @@ class ListenScreen extends React.Component {
       // Setting is loading
       this.setState({ isLoadingRecommendations: true, errorLoadingRecommendations: false });
       // TODO: Get group id
-      const { recommendations } = await getRecommendations('1');
+      const { recommendation } = await getRecommendations('5bf8010a6bed440b63e49eda');
       // Getting ratings
       const { ratings } = await getRatings();
       // Generating ratings in object format
       const ratingsObj = formatRatingsObj(ratings);
       // Setting recommendations
       this.setState({
-        recommendations,
+        recommendations: recommendation.recommendation_tracks,
         isLoadingRecommendations: false,
         errorLoadingRecommendations: false,
         ratings: ratingsObj,
