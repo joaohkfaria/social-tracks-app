@@ -9,6 +9,7 @@ import { getGroups } from '../services/GroupsServices';
 import Spinner from '../components/Spinner';
 import NoItemText from '../components/NoItemText';
 import ErrorMessage from '../components/ErrorMessage';
+import { selectGroup } from '../services/UsersService';
 
 const ActionContainer = styled(View)`
   flex-direction: row;
@@ -31,6 +32,9 @@ class GroupListScreen extends React.Component {
       isLoading: true,
       error: false,
     };
+    // Binding functions
+    this.handleSelectGroup = this.handleSelectGroup.bind(this);
+    this.renderGroupItem = this.renderGroupItem.bind(this);
 
     props.navigation.addListener(
       'willFocus',
@@ -51,21 +55,31 @@ class GroupListScreen extends React.Component {
     }
   }
 
+  async handleSelectGroup(group) {
+    // Get props
+    const { navigation } = this.props;
+    // Select group
+    await selectGroup(group);
+    // Navigate to HomeTabs
+    navigation.navigate('HomeTabs');
+  }
+
+  renderGroupItem(listItem) {
+    const { item } = listItem;
+
+    return (
+      <ListItem
+        onPress={() => this.handleSelectGroup(item)}
+        name={item.name}
+        description={item.users.map(user => user.name).join(', ')}
+      />
+    );
+  }
+
   render() {
     const { navigation } = this.props;
     const { groups, isLoading, error } = this.state;
 
-    function renderGroupItem(listItem) {
-      const { item } = listItem;
-
-      return (
-        <ListItem
-          onPress={() => navigation.navigate('HomeTabs')}
-          name={item.name}
-          description={item.users.map(user => user.name).join(', ')}
-        />
-      );
-    }
 
     if (isLoading) {
       return (
@@ -90,7 +104,7 @@ class GroupListScreen extends React.Component {
           <FlatList
             data={groups}
             keyExtractor={item => item._id}
-            renderItem={renderGroupItem}
+            renderItem={this.renderGroupItem}
             style={{ width: '100%', marginTop: 20 }}
           />
         </ListContainer>

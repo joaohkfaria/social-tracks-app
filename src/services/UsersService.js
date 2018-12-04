@@ -14,6 +14,25 @@ export async function loginSpotify(accessToken) {
   return response.result;
 }
 
+export async function selectGroup(group) {
+  const groupJson = JSON.stringify(group);
+  // Set the group on async storage
+  await AsyncStorage.setItem('@SocialTracksStore:group', groupJson);
+}
+
+export async function unselectGroup() {
+  // Just remove the group key
+  await AsyncStorage.removeItem('@SocialTracksStore:group');
+}
+
+export async function getGroup() {
+  const groupJson = await AsyncStorage.getItem('@SocialTracksStore:group');
+  // If there's no user, just return null
+  if (!groupJson) return null;
+  // Return parsed object
+  return JSON.parse(groupJson);
+}
+
 export async function saveUser(user) {
   const userJson = JSON.stringify(user);
   // Set the user on async storage

@@ -4,14 +4,19 @@ import { FlatList } from 'react-native';
 import Spotify from 'rn-spotify-sdk';
 import DefaultLayout from '../layout/DefaultLayout';
 import ListItem from '../components/ListItem';
-import { logout } from '../services/UsersService';
+import { logout, unselectGroup } from '../services/UsersService';
 
 const settings = [
   {
     id: '1',
     name: 'Change group',
     icon: 'users',
-    handleSelect: navigation => navigation.navigate('GroupsStack'),
+    handleSelect: (navigation) => {
+      // Removing selected group
+      unselectGroup();
+      // Navigating to GroupsStack
+      navigation.navigate('GroupsStack');
+    },
   },
   {
     id: '2',

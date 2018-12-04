@@ -10,6 +10,7 @@ import { getRecommendations } from '../services/RecommendationsServices';
 import { getRatings, createRating, formatRatingsObj } from '../services/RatingService';
 import { showOkAlert } from '../services/AlertService';
 import ErrorMessage from '../components/ErrorMessage';
+import { getGroup } from '../services/UsersService';
 
 class ListenScreen extends React.Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class ListenScreen extends React.Component {
       recommendations: [],
       isLoadingRecommendations: true,
       errorLoadingRecommendations: false,
+      group: null,
     };
     // Binding functions
     this.handlePlayPlayer = this.handlePlayPlayer.bind(this);
@@ -34,12 +36,21 @@ class ListenScreen extends React.Component {
     this.getRecommendations();
   }
 
+  componentWillUnmount() {
+    // Pausing song on unmount
+    Spotify.setPlaying(false);
+  }
+
   async getRecommendations() {
     try {
       // Setting is loading
       this.setState({ isLoadingRecommendations: true, errorLoadingRecommendations: false });
-      // TODO: Get group id
-      const { recommendation } = await getRecommendations('5bf8010a6bed440b63e49eda');
+      // Getting group
+      const group = await getGroup();
+      // Setting group on state
+      this.setState({ group });
+      // Getting recommendation
+      const { recommendation } = await getRecommendations(group._id);
       // Getting ratings
       const { ratings } = await getRatings();
       // Generating ratings in object format
@@ -126,7 +137,7 @@ class ListenScreen extends React.Component {
     const {
       playingStatus, playingSong, ratings,
       isLoadingRecommendations, errorLoadingRecommendations,
-      recommendations,
+      recommendations, group,
     } = this.state;
 
     if (isLoadingRecommendations) {
@@ -147,7 +158,9 @@ class ListenScreen extends React.Component {
 
     return (
       <DefaultLayout padded paddingBar>
-        <Title>Made for your group</Title>
+        <Title>
+          {group ? `Recommendations for ${group.name}` : ''}
+        </Title>
         <FlatList
           data={recommendations}
           keyExtractor={item => item.id}
