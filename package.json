@@ -8,6 +8,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "node-fetch": "^2.3.0",
     "prop-types": "^15.6.2",
     "query-string": "^6.2.0",
     "react": "^16.6.0",

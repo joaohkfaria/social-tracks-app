@@ -1,3 +1,5 @@
+import fetch from 'node-fetch';
+
 export const GET = 'GET';
 export const POST = 'POST';
 export const PUT = 'PUT';
@@ -37,6 +39,8 @@ export async function request(url, type = GET, path = null, params = null, heade
   if (headers !== null) {
     data.headers = Object.assign(data.headers, headers);
   }
+
+  data.timeout = 99999999;
 
   // Making request
   console.info(`FETCHING: ${ENDPOINT}`);
