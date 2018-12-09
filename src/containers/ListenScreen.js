@@ -165,7 +165,12 @@ class ListenScreen extends React.Component {
           data={recommendations}
           keyExtractor={item => item.id}
           renderItem={this.renderItem}
-          style={{ width: '100%', marginTop: 20, flex: 1 }}
+          style={{
+            width: '100%',
+            marginTop: 20,
+            marginBottom: 65,
+            flex: 1,
+          }}
         />
         <MusicPlayer
           name={playingSong ? playingSong.name : null}

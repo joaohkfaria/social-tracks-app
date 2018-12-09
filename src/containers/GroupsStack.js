@@ -11,7 +11,7 @@ const GroupsStack = createStackNavigator({
   GroupCreation: GroupCreationScreen,
 }, {
   initialRouteName: 'GroupList',
-  navigationOptions: {
+  defaultNavigationOptions: {
     headerStyle: {
       backgroundColor: Colors.default,
       // textTransform: 'uppercase',

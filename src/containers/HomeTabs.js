@@ -12,7 +12,7 @@ const HomeTabs = createBottomTabNavigator(
     Statistics: StatisticsScreen,
     Settings: SettingsScreen,
   }, {
-    navigationOptions: ({ navigation }) => ({
+    defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: (iconProps) => {
         const { routeName } = navigation.state;
         const { focused } = iconProps;
