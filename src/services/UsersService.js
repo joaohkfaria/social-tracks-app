@@ -64,3 +64,18 @@ export async function loginMastodon(authCode, userId) {
 
   return response.result;
 }
+
+export async function updateMastodon() {
+  const user = await getUser();
+
+  // Setting params
+  const params = {
+    user_id: user._id,
+    mastodon_id: user.mastodon_id,
+  };
+  // Fetching API
+  const response = await request(API_URL, GET, 'users/update_mastodon', params);
+  if (response.error) throw new Error('Error updating mastodon info');
+
+  return response.result;
+}

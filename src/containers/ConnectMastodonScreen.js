@@ -4,7 +4,12 @@ import { SafeAreaView, WebView } from 'react-native';
 import queryString from 'query-string';
 import ConnectFull from '../components/ConnectFull';
 import { showOkAlert } from '../services/AlertService';
-import { loginMastodon, getUser, saveUser } from '../services/UsersService';
+import {
+  loginMastodon,
+  getUser,
+  saveUser,
+  updateMastodon,
+} from '../services/UsersService';
 import Colors from '../constants/Colors';
 import { MASTODON_AUTH_URL } from '../../config';
 
@@ -28,9 +33,13 @@ class ConnectMastodonScreen extends React.Component {
       // Trying to get user from Async Storage
       const user = await getUser();
       // If the user has Mastodon, just go next
-      if (user && user.mastodon_id) this.goNext();
-      // Set that's not loading, and will show login Mastodon
-      else this.setState({ isLoading: false });
+      if (user && user.mastodon_id) {
+        await updateMastodon();
+        this.goNext();
+      } else {
+        // Set that's not loading, and will show login Mastodon
+        this.setState({ isLoading: false });
+      }
     } catch (error) {
       showOkAlert('Mastodon', 'Cannot get data from Mastodon. Please, try again');
     }
