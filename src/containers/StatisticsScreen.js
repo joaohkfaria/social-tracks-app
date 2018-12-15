@@ -40,29 +40,36 @@ const data = [
 const colors = ['#f48e8e', '#ee4444', '#be3636', '#8e2828'];
 const keys = ['social', 'expert', 'similarity', 'friendly'];
 
-const StatisticsScreen = () => (
-  <DefaultLayout>
-    <ScrollView>
-      <DefaultLayout padded paddingBar>
-        <Title>Your influence in the group</Title>
-        <ProgressCircle
-          style={{ height: 200, marginTop: 20, marginBottom: 20 }}
-          progress={0.7}
-          progressColor={Colors.default}
-        />
+class StatisticsScreen extends React.Component {
+  async getRecommendations() {
+  }
 
-        <Title>You in the group</Title>
-        <StackedBarChart
-          style={{ height: 200 }}
-          keys={keys}
-          colors={colors}
-          data={data}
-          showGrid={false}
-          contentInset={{ top: 30, bottom: 30 }}
-        />
+  render() {
+    return (
+      <DefaultLayout>
+        <ScrollView>
+          <DefaultLayout padded paddingBar>
+            <Title>Your influence in the group</Title>
+            <ProgressCircle
+              style={{ height: 200, marginTop: 20, marginBottom: 20 }}
+              progress={0.7}
+              progressColor={Colors.default}
+            />
+
+            <Title>You in the group</Title>
+            <StackedBarChart
+              style={{ height: 200 }}
+              keys={keys}
+              colors={colors}
+              data={data}
+              showGrid={false}
+              contentInset={{ top: 30, bottom: 30 }}
+            />
+          </DefaultLayout>
+        </ScrollView>
       </DefaultLayout>
-    </ScrollView>
-  </DefaultLayout>
-);
+    );
+  }
+}
 
 export default StatisticsScreen;

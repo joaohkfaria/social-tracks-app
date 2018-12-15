@@ -15,6 +15,7 @@ const RootStack = createSwitchNavigator({
   initialRouteName: 'ConnectSpotify',
 });
 
+
 const AppContainer = createAppContainer(RootStack);
 
 const App = () => (

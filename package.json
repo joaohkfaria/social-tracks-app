@@ -8,6 +8,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "mobx": "^5.8.0",
+    "mobx-react": "^5.4.3",
     "node-fetch": "^2.3.0",
     "prop-types": "^15.6.2",
     "query-string": "^6.2.0",
@@ -25,6 +27,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-decorators": "^7.2.2",
+    "babel-eslint": "^10.0.1",
     "babel-jest": "23.6.0",
     "eslint": "^5.10.0",
     "eslint-config-airbnb": "^17.1.0",

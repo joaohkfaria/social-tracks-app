@@ -13,4 +13,5 @@ module.exports = {
     "globals": {
         "fetch": true,
     },
+    "parser": "babel-eslint"
 };

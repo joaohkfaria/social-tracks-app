@@ -1,15 +1,51 @@
 import React from 'react';
 import { createBottomTabNavigator } from 'react-navigation';
+import { observable, action } from 'mobx';
 import ListenScreen from './ListenScreen';
 import SettingsScreen from './SettingsScreen';
 import StatisticsScreen from './StatisticsScreen';
 import Colors from '../constants/Colors';
 import Icon from '../components/Icon';
 
+const appState = observable({
+  recommendations: [],
+  ratings: {},
+  isGeneratingRecommendation: false,
+  isLoadingRecommendations: true,
+  errorLoadingRecommendations: false,
+});
+
+
+appState.setLoadingRecommendations = action(() => {
+  appState.isLoadingRecommendations = true;
+  appState.errorLoadingRecommendations = false;
+});
+
+appState.setErrorRecommendations = action(() => {
+  appState.isLoadingRecommendations = false;
+  appState.errorLoadingRecommendations = true;
+});
+
+appState.setRecommendations = action((props) => {
+  appState.recommendations = props.recommendations;
+  appState.ratings = props.ratings;
+  appState.isGeneratingRecommendation = props.isGeneratingRecommendation;
+  appState.isLoadingRecommendations = false;
+  appState.errorLoadingRecommendations = false;
+});
+
+appState.setRatings = action((ratings) => {
+  appState.ratings = ratings;
+});
+
 const HomeTabs = createBottomTabNavigator(
   {
-    Listen: ListenScreen,
-    Statistics: StatisticsScreen,
+    Listen: {
+      screen: props => <ListenScreen {...props} store={appState} />,
+    },
+    Statistics: {
+      screen: props => <StatisticsScreen {...props} store={appState} />,
+    },
     Settings: SettingsScreen,
   }, {
     defaultNavigationOptions: ({ navigation }) => ({

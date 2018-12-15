@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FlatList } from 'react-native';
 import Spotify from 'rn-spotify-sdk';
+import { observer } from 'mobx-react';
 import DefaultLayout from '../layout/DefaultLayout';
 import TrackItem from '../components/music/TrackItem';
 import Title from '../components/Title';
@@ -12,6 +14,7 @@ import ErrorMessage from '../components/ErrorMessage';
 import { getGroup } from '../services/UsersService';
 import GeneratingRecommendation from '../components/GeneratingRecommendation';
 
+@observer
 class ListenScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -19,11 +22,6 @@ class ListenScreen extends React.Component {
     this.state = {
       playingStatus: 'paused',
       playingSong: null,
-      ratings: {},
-      recommendations: [],
-      isGeneratingRecommendation: false,
-      isLoadingRecommendations: true,
-      errorLoadingRecommendations: false,
       group: null,
     };
     // Binding functions
@@ -44,9 +42,11 @@ class ListenScreen extends React.Component {
   }
 
   async getRecommendations() {
+    // Getting props
+    const { store } = this.props;
     try {
       // Setting is loading
-      this.setState({ isLoadingRecommendations: true, errorLoadingRecommendations: false });
+      store.setLoadingRecommendations();
       // Getting group
       const group = await getGroup();
       // Setting group on state
@@ -58,17 +58,15 @@ class ListenScreen extends React.Component {
       // Generating ratings in object format
       const ratingsObj = formatRatingsObj(ratings);
       // Setting recommendations
-      this.setState({
+      store.setRecommendations({
         isGeneratingRecommendation: recommendation.generating_recommendation,
         recommendations: recommendation.recommendation_tracks,
-        isLoadingRecommendations: false,
-        errorLoadingRecommendations: false,
         ratings: ratingsObj,
       });
     } catch (error) {
       console.info(error);
       // Setting error
-      this.setState({ errorLoadingRecommendations: true, isLoadingRecommendations: false });
+      store.setErrorRecommendations();
     }
   }
 
@@ -102,32 +100,39 @@ class ListenScreen extends React.Component {
   }
 
   async handleChangeRating(ratingValue) {
-    const { ratings, playingSong } = this.state;
+    // Getting state
+    const { playingSong } = this.state;
+    // Getting props
+    const { store } = this.props;
+    // Getting from mobx store
+    const { ratings } = store;
     // If it's not the current playing song, just ignore it
     if (!playingSong) return;
     try {
       // Setting rating on songId
-      this.setState({
-        ratings: { ...ratings, [playingSong.id]: ratingValue },
-      });
+      store.setRatings({ ...ratings, [playingSong.id]: ratingValue });
       // Creating rating
       await createRating(playingSong.id, ratingValue);
     } catch (error) {
       // Setting previous rate again
-      this.setState({
-        ratings: { ...ratings, [playingSong.id]: ratings[playingSong.id] },
-      });
+      store.setRatings({ ...ratings, [playingSong.id]: ratings[playingSong.id] });
       showOkAlert('Setting Rating', 'Unable to set rating for this song, please, try again');
     }
   }
 
   renderItem(listItem) {
+    // Getting props
+    const { store } = this.props;
     const { item } = listItem;
+    // Getting state
     const {
       playingSong,
       playingStatus,
-      ratings,
     } = this.state;
+    // Getting from mobx
+    const {
+      ratings,
+    } = store;
 
     return (
       <TrackItem
@@ -142,12 +147,20 @@ class ListenScreen extends React.Component {
   }
 
   render() {
+    // Getting props
+    const { store } = this.props;
+    // Getting state
     const {
-      playingStatus, playingSong, ratings,
-      isLoadingRecommendations, errorLoadingRecommendations,
-      recommendations, group,
-      isGeneratingRecommendation,
+      playingStatus,
+      playingSong,
+      group,
     } = this.state;
+    // Getting from Mobx Store
+    const {
+      recommendations, ratings,
+      isLoadingRecommendations, errorLoadingRecommendations,
+      isGeneratingRecommendation,
+    } = store;
 
     if (errorLoadingRecommendations) {
       return (
@@ -203,5 +216,9 @@ class ListenScreen extends React.Component {
     );
   }
 }
+
+ListenScreen.propTypes = {
+  store: PropTypes.object.isRequired,
+};
 
 export default ListenScreen;
