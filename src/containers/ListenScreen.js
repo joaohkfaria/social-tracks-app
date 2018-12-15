@@ -5,12 +5,12 @@ import DefaultLayout from '../layout/DefaultLayout';
 import TrackItem from '../components/music/TrackItem';
 import Title from '../components/Title';
 import MusicPlayer from '../components/music/MusicPlayer';
-import Spinner from '../components/Spinner';
 import { getRecommendations } from '../services/RecommendationsServices';
 import { getRatings, createRating, formatRatingsObj } from '../services/RatingService';
 import { showOkAlert } from '../services/AlertService';
 import ErrorMessage from '../components/ErrorMessage';
 import { getGroup } from '../services/UsersService';
+import GeneratingRecommendation from '../components/GeneratingRecommendation';
 
 class ListenScreen extends React.Component {
   constructor(props) {
@@ -21,6 +21,7 @@ class ListenScreen extends React.Component {
       playingSong: null,
       ratings: {},
       recommendations: [],
+      isGeneratingRecommendation: false,
       isLoadingRecommendations: true,
       errorLoadingRecommendations: false,
       group: null,
@@ -29,6 +30,7 @@ class ListenScreen extends React.Component {
     this.handlePlayPlayer = this.handlePlayPlayer.bind(this);
     this.handlePlaySong = this.handlePlaySong.bind(this);
     this.renderItem = this.renderItem.bind(this);
+    this.getRecommendations = this.getRecommendations.bind(this);
   }
 
   componentDidMount() {
@@ -57,12 +59,14 @@ class ListenScreen extends React.Component {
       const ratingsObj = formatRatingsObj(ratings);
       // Setting recommendations
       this.setState({
+        isGeneratingRecommendation: recommendation.generating_recommendation,
         recommendations: recommendation.recommendation_tracks,
         isLoadingRecommendations: false,
         errorLoadingRecommendations: false,
         ratings: ratingsObj,
       });
     } catch (error) {
+      console.info(error);
       // Setting error
       this.setState({ errorLoadingRecommendations: true, isLoadingRecommendations: false });
     }
@@ -119,7 +123,11 @@ class ListenScreen extends React.Component {
 
   renderItem(listItem) {
     const { item } = listItem;
-    const { playingSong, playingStatus, ratings } = this.state;
+    const {
+      playingSong,
+      playingStatus,
+      ratings,
+    } = this.state;
 
     return (
       <TrackItem
@@ -138,15 +146,8 @@ class ListenScreen extends React.Component {
       playingStatus, playingSong, ratings,
       isLoadingRecommendations, errorLoadingRecommendations,
       recommendations, group,
+      isGeneratingRecommendation,
     } = this.state;
-
-    if (isLoadingRecommendations) {
-      return (
-        <DefaultLayout padded paddingBar>
-          <Spinner />
-        </DefaultLayout>
-      );
-    }
 
     if (errorLoadingRecommendations) {
       return (
@@ -156,8 +157,8 @@ class ListenScreen extends React.Component {
       );
     }
 
-    return (
-      <DefaultLayout padded paddingBar>
+    const renderContent = () => (
+      <>
         <Title>
           {group ? `Recommendations for ${group.name}` : ''}
         </Title>
@@ -171,6 +172,8 @@ class ListenScreen extends React.Component {
             marginBottom: 65,
             flex: 1,
           }}
+          refreshing={isLoadingRecommendations}
+          onRefresh={this.getRecommendations}
         />
         <MusicPlayer
           name={playingSong ? playingSong.name : null}
@@ -181,6 +184,21 @@ class ListenScreen extends React.Component {
           rating={playingSong ? ratings[playingSong.id] : null}
           onChangeRating={newRating => this.handleChangeRating(newRating)}
         />
+      </>
+    );
+
+    return (
+      <DefaultLayout padded paddingBar>
+        {
+          isGeneratingRecommendation
+            ? (
+              <GeneratingRecommendation
+                onRefresh={() => this.getRecommendations()}
+                isRefreshing={isLoadingRecommendations}
+              />
+            )
+            : renderContent()
+        }
       </DefaultLayout>
     );
   }
