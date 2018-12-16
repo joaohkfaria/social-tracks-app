@@ -29,6 +29,25 @@ class ListenScreen extends React.Component {
     this.handlePlaySong = this.handlePlaySong.bind(this);
     this.renderItem = this.renderItem.bind(this);
     this.getRecommendations = this.getRecommendations.bind(this);
+    this.getNextSong = this.getNextSong.bind(this);
+
+    Spotify.addListener('trackDelivered', ({ metadata }) => {
+      // Getting current track that played
+      const { currentTrack } = metadata;
+      console.info('TRACK DELIVERED', currentTrack);
+      // Getting next song
+      const nextSong = this.getNextSong(currentTrack.uri);
+      // Playing if next song exist
+      if (nextSong) {
+        this.handlePlaySong(nextSong);
+      } else {
+        // Clean playing song if there's no song
+        this.setState({
+          playingStatus: 'paused',
+          playingSong: null,
+        });
+      }
+    });
   }
 
   componentDidMount() {
@@ -42,6 +61,31 @@ class ListenScreen extends React.Component {
     // Reset recommendation
     const { store } = this.props;
     store.resetRecommendations();
+  }
+
+  getNextSong(currentSpotifyUri) {
+    const { store } = this.props;
+    const { recommendations } = store;
+    const numTracks = recommendations.length;
+    let currentIndex = -1;
+
+    // Finding current playing index
+    for (let i = 0; i < numTracks; i += 1) {
+      const track = recommendations[i];
+      if (currentSpotifyUri === track.uri) {
+        // We've found the track, save it and break
+        currentIndex = i;
+        break;
+      }
+    }
+
+    // Checking if we can get the next song
+    if (currentIndex !== -1 && currentIndex < (numTracks - 1)) {
+      // Return the next song
+      return recommendations[currentIndex + 1];
+    }
+
+    return null;
   }
 
   async getRecommendations() {

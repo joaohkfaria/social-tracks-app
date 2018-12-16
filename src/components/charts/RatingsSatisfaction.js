@@ -22,12 +22,6 @@ const Container = styled(View)`
   margin: 20px 0px;
 `;
 
-const Title = styled(Text)`
-  font-size: 22px;
-  color: ${Colors.white};
-  font-weight: 400;
-`;
-
 const RatingText = styled(Text)`
   font-size: 18px;
   color: ${Colors.white};

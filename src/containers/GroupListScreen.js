@@ -6,7 +6,6 @@ import PrimaryButton from '../components/PrimaryButton';
 import DefaultLayout from '../layout/DefaultLayout';
 import ListItem from '../components/ListItem';
 import { getGroups } from '../services/GroupsServices';
-import Spinner from '../components/Spinner';
 import NoItemText from '../components/NoItemText';
 import ErrorMessage from '../components/ErrorMessage';
 import { selectGroup } from '../services/UsersService';
