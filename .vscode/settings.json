@@ -2,5 +2,6 @@
   "search.exclude": {
     "**/android": true,
     "**/ios": true
-  }
+  },
+  "python.linting.pylintEnabled": true
 }

@@ -10,7 +10,7 @@ const DefaultLayout = styled(View)`
   flex: 1;
   padding-bottom: ${({ padded }) => (padded && isIphoneX() ? `${getBottomSpace()}px` : `${defaultPadding}px`)};
   background-color: ${Colors.defaultBackground};
-  paddingTop: ${({ padded, paddingBar }) => {
+  padding-top: ${({ padded, paddingBar }) => {
     if (paddingBar && isIphoneX()) {
       return getStatusBarHeight() + defaultPadding + 20;
     }

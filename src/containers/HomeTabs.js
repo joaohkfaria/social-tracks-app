@@ -10,6 +10,7 @@ import Icon from '../components/Icon';
 const appState = observable({
   recommendations: [],
   ratings: {},
+  influenceFactors: null,
   isGeneratingRecommendation: false,
   isLoadingRecommendations: true,
   errorLoadingRecommendations: false,
@@ -29,6 +30,7 @@ appState.setErrorRecommendations = action(() => {
 appState.setRecommendations = action((props) => {
   appState.recommendations = props.recommendations;
   appState.ratings = props.ratings;
+  appState.influenceFactors = props.influenceFactors;
   appState.isGeneratingRecommendation = props.isGeneratingRecommendation;
   appState.isLoadingRecommendations = false;
   appState.errorLoadingRecommendations = false;
@@ -36,6 +38,15 @@ appState.setRecommendations = action((props) => {
 
 appState.setRatings = action((ratings) => {
   appState.ratings = ratings;
+});
+
+appState.resetRecommendations = action(() => {
+  appState.recommendations = [];
+  appState.ratings = {};
+  appState.influenceFactors = null;
+  appState.isGeneratingRecommendation = false;
+  appState.isLoadingRecommendations = true;
+  appState.errorLoadingRecommendations = false;
 });
 
 const HomeTabs = createBottomTabNavigator(

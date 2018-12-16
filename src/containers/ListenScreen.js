@@ -39,6 +39,9 @@ class ListenScreen extends React.Component {
   componentWillUnmount() {
     // Pausing song on unmount
     Spotify.setPlaying(false);
+    // Reset recommendation
+    const { store } = this.props;
+    store.resetRecommendations();
   }
 
   async getRecommendations() {
@@ -60,6 +63,7 @@ class ListenScreen extends React.Component {
       // Setting recommendations
       store.setRecommendations({
         isGeneratingRecommendation: recommendation.generating_recommendation,
+        influenceFactors: recommendation.influence_factors,
         recommendations: recommendation.recommendation_tracks,
         ratings: ratingsObj,
       });

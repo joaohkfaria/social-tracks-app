@@ -35,6 +35,7 @@ class GroupListScreen extends React.Component {
     // Binding functions
     this.handleSelectGroup = this.handleSelectGroup.bind(this);
     this.renderGroupItem = this.renderGroupItem.bind(this);
+    this.getGroups = this.getGroups.bind(this);
 
     props.navigation.addListener(
       'willFocus',
@@ -80,15 +81,6 @@ class GroupListScreen extends React.Component {
     const { navigation } = this.props;
     const { groups, isLoading, error } = this.state;
 
-
-    if (isLoading) {
-      return (
-        <DefaultLayout>
-          <Spinner />
-        </DefaultLayout>
-      );
-    }
-
     if (error) {
       return (
         <DefaultLayout padded>
@@ -100,12 +92,14 @@ class GroupListScreen extends React.Component {
     return (
       <DefaultLayout padded>
         <ListContainer>
-          {groups.length === 0 && <NoItemText />}
+          {!isLoading && groups.length === 0 && <NoItemText />}
           <FlatList
             data={groups}
             keyExtractor={item => item._id}
             renderItem={this.renderGroupItem}
             style={{ width: '100%', marginTop: 20 }}
+            refreshing={isLoading}
+            onRefresh={this.getGroups}
           />
         </ListContainer>
         <ActionContainer>
