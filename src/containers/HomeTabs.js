@@ -81,6 +81,8 @@ const HomeTabs = createBottomTabNavigator(
     tabBarOptions: {
       style: {
         backgroundColor: Colors.default,
+        height: 60,
+        paddingBottom: 10,
       },
       labelStyle: {
         color: Colors.white,

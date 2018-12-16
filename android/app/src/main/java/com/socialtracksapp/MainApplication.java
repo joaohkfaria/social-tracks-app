@@ -3,6 +3,9 @@ package com.socialtracksapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.lufinkey.react.spotify.RNSpotifyPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.horcrux.svg.SvgPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.lufinkey.react.spotify.RNSpotifyPackage;
 import com.lufinkey.react.eventemitter.RNEventEmitterPackage;
@@ -28,11 +31,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNGestureHandlerPackage(),
             new RNSpotifyPackage(),
-            new RNEventEmitterPackage(),
             new VectorIconsPackage(),
-            new SvgPackage()
+            new SvgPackage(),
+            new RNGestureHandlerPackage(),
+            new RNEventEmitterPackage()
       );
     }
 

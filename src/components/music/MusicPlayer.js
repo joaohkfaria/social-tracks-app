@@ -65,8 +65,8 @@ const MusicPlayer = ({
       <Col style={{ flex: 1, marginLeft: 10, marginRight: 10 }}>
         <Row>
           <TrackInfoContainer>
-            <Title>{name || 'Not Playing'}</Title>
-            <Artist>{artist || 'Not Selected'}</Artist>
+            <Title numberOfLines={1}>{name || 'Not Playing'}</Title>
+            <Artist numberOfLines={1}>{artist || 'Not Selected'}</Artist>
           </TrackInfoContainer>
         </Row>
         <Row style={{ flex: 1, alignItems: 'center' }}>

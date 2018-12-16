@@ -33,21 +33,29 @@ class ConnectMastodonScreen extends React.Component {
       // Trying to get user from Async Storage
       const user = await getUser();
       // If the user has Mastodon, just go next
+      console.info('GOT USER', user);
       if (user && user.mastodon_id) {
         await updateMastodon();
+        console.info('UPDATED');
         this.goNext();
+        console.info('WENT NEXT');
       } else {
         // Set that's not loading, and will show login Mastodon
         this.setState({ isLoading: false });
       }
     } catch (error) {
+      console.info(error);
       showOkAlert('Mastodon', 'Cannot get data from Mastodon. Please, try again');
+      // If there's an error, stop loading
+      this.setState({ isLoading: false });
     }
   }
 
   goNext() {
     const { navigation } = this.props;
+    console.info('GOT NAVIGATION', navigation);
     navigation.navigate('GroupsStack');
+    console.info('NAVIGATED');
   }
 
   async handleConnectMastodon() {

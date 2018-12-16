@@ -10,7 +10,9 @@ const RootStack = createSwitchNavigator({
   HomeTabs,
   ConnectSpotify: ConnectSpotifyScreen,
   ConnectMastodon: ConnectMastodonScreen,
-  GroupsStack,
+  GroupsStack: {
+    screen: GroupsStack,
+  },
 }, {
   initialRouteName: 'ConnectSpotify',
 });

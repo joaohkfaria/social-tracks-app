@@ -254,10 +254,12 @@ class ListenScreen extends React.Component {
         {
           isGeneratingRecommendation
             ? (
-              <GeneratingRecommendation
-                onRefresh={() => this.getRecommendations()}
-                isRefreshing={isLoadingRecommendations}
-              />
+              <DefaultLayout padded padddingBar>
+                <GeneratingRecommendation
+                  onRefresh={() => this.getRecommendations()}
+                  isRefreshing={isLoadingRecommendations}
+                />
+              </DefaultLayout>
             )
             : renderContent()
         }
