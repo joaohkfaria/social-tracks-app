@@ -10,10 +10,10 @@ import PlayButton from './PlayButton';
 const Container = styled(View)`
   flex-direction: column;
   background-color: ${Colors.darkContrast};
-  position: absolute;
+  /* position: absolute;
   left: 0;
   bottom: 0;
-  right: 0;
+  right: 0; */
   padding: 10px;
   align-items: center;
 `;

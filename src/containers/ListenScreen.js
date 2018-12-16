@@ -220,22 +220,23 @@ class ListenScreen extends React.Component {
 
     const renderContent = () => (
       <>
-        <Title>
-          {group ? `Recommendations for ${group.name}` : ''}
-        </Title>
-        <FlatList
-          data={recommendations}
-          keyExtractor={item => item.id}
-          renderItem={this.renderItem}
-          style={{
-            width: '100%',
-            marginTop: 20,
-            marginBottom: 65,
-            flex: 1,
-          }}
-          refreshing={isLoadingRecommendations}
-          onRefresh={this.getRecommendations}
-        />
+        <DefaultLayout padded paddingBar>
+          <Title>
+            {group ? `Recommendations for ${group.name}` : ''}
+          </Title>
+          <FlatList
+            data={recommendations}
+            keyExtractor={item => item.id}
+            renderItem={this.renderItem}
+            style={{
+              width: '100%',
+              marginTop: 20,
+              flex: 1,
+            }}
+            refreshing={isLoadingRecommendations}
+            onRefresh={this.getRecommendations}
+          />
+        </DefaultLayout>
         <MusicPlayer
           name={playingSong ? playingSong.name : null}
           album={playingSong ? playingSong.album.images[0].url : null}
@@ -249,7 +250,7 @@ class ListenScreen extends React.Component {
     );
 
     return (
-      <DefaultLayout padded paddingBar>
+      <DefaultLayout>
         {
           isGeneratingRecommendation
             ? (

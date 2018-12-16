@@ -44,6 +44,11 @@ class ConnectSpotifyScreen extends React.Component {
     } catch (error) {
       console.info(error);
       showOkAlert('Spotify', 'Cannot initialize Spotify, please, restart the app and try again');
+      // Setting initial state again
+      this.setState({
+        isLoading: false,
+        isLoggedIn: false,
+      });
     }
   }
 
@@ -81,6 +86,7 @@ class ConnectSpotifyScreen extends React.Component {
     } catch (error) {
       console.info('ERROR LOGIN API', error);
       showOkAlert('Spotify', 'Cannot get authenticate with API, please, try again.');
+      // Resetting the state
       this.setState({ isLoggedIn: false, isLoading: false });
     }
   }
@@ -91,11 +97,18 @@ class ConnectSpotifyScreen extends React.Component {
     try {
       // Login with Spotify
       const isLoggedIn = await Spotify.login();
-      // Setting new state
-      this.setState({ isLoggedIn });
+      // If the user cancelled, the is logged in is false
+      if (!isLoggedIn) {
+        this.setState({ isLoggedIn, isLoading: false });
+      } else {
+        // Setting new state
+        this.setState({ isLoggedIn });
+      }
     } catch (error) {
       console.info('Error logging in with Spotify', error);
       showOkAlert('Spotify', 'Error logging in with Spotify, please, try again');
+      // Resetting the state
+      this.setState({ isLoggedIn: false, isLoading: false });
     }
   }
 

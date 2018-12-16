@@ -2,7 +2,7 @@
  * SOCIAL TRACKS CONFIG
  */
 const apiUrl = {
-  development: 'http://localhost:3000',
+  development: 'http://192.168.0.249:3000',
   production: 'https://social-tracks.herokuapp.com',
 };
 export const API_URL = apiUrl.development;
@@ -11,17 +11,17 @@ export const API_URL = apiUrl.development;
  * SPOTIFY CONFIG
  */
 const spotifyLoginUrl = {
-  development: 'http://localhost:3000/users/login_spotify',
+  development: `${API_URL}/users/login_spotify`,
   production: 'https://social-tracks.herokuapp.com/users/login_spotify',
 };
 export const SPOTIFY_CLIENT_ID = '33d3775d9882478686780f7c9a92d071';
 export const SPOTIFY_REDIRECT_URL = spotifyLoginUrl.development;
 const spotifyRefreshUrl = {
-  development: 'http://localhost:3000/spotify/refresh',
+  development: `${API_URL}/spotify/refresh`,
   production: 'https://social-tracks.herokuapp.com/spotify/refresh',
 };
 const spotifySwapUrl = {
-  development: 'http://localhost:3000/spotify/swap',
+  development: `${API_URL}/spotify/swap`,
   production: 'https://social-tracks.herokuapp.com/spotify/swap',
 };
 export const SPOTIFY_REFRESH_URL = spotifyRefreshUrl.development;
