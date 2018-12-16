@@ -54,7 +54,7 @@ const HomeTabs = createBottomTabNavigator(
     Listen: {
       screen: props => <ListenScreen {...props} store={appState} />,
     },
-    Statistics: {
+    Stats: {
       screen: props => <StatisticsScreen {...props} store={appState} />,
     },
     Settings: SettingsScreen,
@@ -65,7 +65,7 @@ const HomeTabs = createBottomTabNavigator(
         const { focused } = iconProps;
         const icons = {
           Listen: 'play-circle',
-          Statistics: 'chart-pie',
+          Stats: 'chart-pie',
           Settings: 'sliders-h',
         };
 

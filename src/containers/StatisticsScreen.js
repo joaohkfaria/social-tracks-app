@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { observer } from 'mobx-react';
 import DefaultLayout from '../layout/DefaultLayout';
 import GeneratingRecommendation from '../components/GeneratingRecommendation';
