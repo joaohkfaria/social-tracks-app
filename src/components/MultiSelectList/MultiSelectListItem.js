@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import Colors from '../../constants/Colors';
 import Icon from '../Icon';
 import Divider from '../Divider';
+import userImage from '../../images/user.png';
 
 const Name = styled(Text)`
   font-size: 20px;
@@ -41,7 +42,9 @@ const MultiSelectListItem = ({
     <View style={{ flexDirection: 'column', alignItems: 'center' }}>
       <Container>
         {
-          avatar && <Avatar source={{ uri: avatar }} />
+          avatar
+            ? <Avatar source={{ uri: avatar }} />
+            : <Avatar source={userImage} />
         }
         <Name>
           {name}
