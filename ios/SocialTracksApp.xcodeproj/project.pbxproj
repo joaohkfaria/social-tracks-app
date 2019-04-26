@@ -345,6 +345,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNSpotify;
 		};
+		905FC705225D87D100DA5716 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2C63B22ABA9E42C98554A143 /* RNGestureHandler.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B5C32A36220C603B000FFB8D;
+			remoteInfo = "RNGestureHandler-tvOS";
+		};
 		90A8CAC421BCD0C400494D81 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2C63B22ABA9E42C98554A143 /* RNGestureHandler.xcodeproj */;
@@ -794,6 +801,7 @@
 			isa = PBXGroup;
 			children = (
 				90A8CAC521BCD0C400494D81 /* libRNGestureHandler.a */,
+				905FC706225D87D100DA5716 /* libRNGestureHandler-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -937,6 +945,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1284,6 +1293,13 @@
 			fileType = archive.ar;
 			path = libRNSpotify.a;
 			remoteRef = 9033C118219E683E00C3875E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		905FC706225D87D100DA5716 /* libRNGestureHandler-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNGestureHandler-tvOS.a";
+			remoteRef = 905FC705225D87D100DA5716 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		90A8CAC521BCD0C400494D81 /* libRNGestureHandler.a */ = {

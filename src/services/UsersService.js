@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { request, GET } from './NetworkService';
 import { API_URL } from '../../config';
 

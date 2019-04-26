@@ -3,6 +3,7 @@
  */
 const apiUrl = {
   development: 'http://192.168.0.249:3000',
+  // development: 'http://18.216.97.224:3000',
   production: 'https://social-tracks.herokuapp.com',
 };
 export const API_URL = apiUrl.development;
@@ -31,4 +32,5 @@ export const SPOTIFY_SCOPES = ['streaming', 'user-follow-read', 'user-library-re
 /**
  * MASTODON CONFIG
  */
-export const MASTODON_AUTH_URL = 'https://socialtracks.masto.host/oauth/authorize?scope=read&response_type=code&redirect_uri=urn:ietf:wg:oauth:2.0:oob&client_id=06738ef19e97d74a1078948a6981524aa366389d8b0e1afe84130df1e06c0f64';
+const MASTODON_CLIENT_ID = 'd7abf1a2acaa6e8a0893e74557519cc2dad89a0ae74cff7f3d654bd7844411a9';
+export const MASTODON_AUTH_URL = `https://socialtracks.masto.host/oauth/authorize?scope=read&response_type=code&redirect_uri=urn:ietf:wg:oauth:2.0:oob&client_id=${MASTODON_CLIENT_ID}`;

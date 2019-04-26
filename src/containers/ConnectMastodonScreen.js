@@ -85,15 +85,15 @@ class ConnectMastodonScreen extends React.Component {
   handleChangeUrlWebview(e) {
     // Getting url
     console.info(e);
-    const { url, navigationType } = e;
+    const { url, navigationType, loading } = e;
     // TODO: Better way to get out from authorize
-    if (url === 'https://socialtracks.masto.host/oauth/authorize' && navigationType !== 'formsubmit') {
+    if (url === 'https://socialtracks.masto.host/oauth/authorize' && navigationType !== 'formsubmit' && !loading) {
       this.setState({ showMastodonAuthorize: false });
       return;
     }
     // Getting code
     const query = queryString.parse(queryString.extract(url));
-    if (query.code) {
+    if (query && query.code) {
       this.finishLoginMastodon(query.code);
       this.setState({ showMastodonAuthorize: false, isLoading: true });
     }

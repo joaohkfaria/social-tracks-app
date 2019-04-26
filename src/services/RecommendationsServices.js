@@ -5,7 +5,7 @@ import { getUser } from './UsersService';
 
 export async function getRecommendations(groupId) {
   // Getting Spotify access token
-  const { accessToken } = await Spotify.getAuthAsync();
+  const { accessToken } = await Spotify.getSessionAsync();
   // Getting user
   const user = await getUser();
   // Setting params

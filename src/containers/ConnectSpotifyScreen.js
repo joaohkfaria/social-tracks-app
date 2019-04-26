@@ -67,7 +67,7 @@ class ConnectSpotifyScreen extends React.Component {
   async handleIsLoggedIn() {
     try {
       // Sending data to API
-      const authData = await Spotify.getAuthAsync();
+      const authData = await Spotify.getSessionAsync();
       console.info('AUTH DATA', authData);
       // If there's no auth data, the user is not logged in
       if (!authData) {

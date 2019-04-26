@@ -96,7 +96,6 @@ def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.socialtracksapp"
@@ -148,6 +147,7 @@ configurations.all {
 }
 
 dependencies {
+    implementation project(':@react-native-community_async-storage')
     implementation project(':rn-spotify-sdk')
     implementation project(':react-native-events')
     implementation project(':react-native-vector-icons')
