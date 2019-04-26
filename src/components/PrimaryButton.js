@@ -43,7 +43,7 @@ const PrimaryButton = ({
         && (
           <Icon
             name={iconName}
-            color="white"
+            color={Colors.white}
             size={25}
           />
         )
