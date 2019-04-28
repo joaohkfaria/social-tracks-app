@@ -30,7 +30,7 @@ const PrimaryButton = ({
   backgroundColor, onPress,
   style,
 }) => (
-  <View style={{ flexDirection: 'column'}}>
+  <View style={{ flexDirection: 'column' }}>
     <TouchableHighlight
       title={title}
       onPress={onPress}
