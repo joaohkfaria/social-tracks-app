@@ -1,5 +1,5 @@
 import { API_URL } from '../../config';
-import { request, POST, GET } from './NetworkService';
+import { request, POST, GET, DELETE } from './NetworkService';
 import { getUser } from './UsersService';
 
 export async function getGroups() {
@@ -28,6 +28,14 @@ export async function createGroup(name, userIds) {
   // Fetching API
   const response = await request(API_URL, POST, 'groups', params);
   if (response.error) throw new Error('Error creating group on API');
+
+  return response.result;
+}
+
+export async function deleteGroup(groupId) {
+  // Fetching API
+  const response = await request(API_URL, DELETE, `groups/${groupId}`);
+  if (response.error) throw new Error('Error deleting group on API');
 
   return response.result;
 }

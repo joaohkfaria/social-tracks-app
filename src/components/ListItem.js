@@ -34,10 +34,12 @@ const Row = styled(View)`
 const GroupListItem = ({
   iconName, name,
   description, onPress,
+  onLongPress,
 }) => (
   <TouchableOpacity
     onPress={onPress}
     activeOpacity={0.7}
+    onLongPress={onLongPress}
   >
     <View style={{ flexDirection: 'column', alignItems: 'center' }}>
       <Container>
@@ -69,12 +71,14 @@ GroupListItem.propTypes = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string,
   onPress: PropTypes.func,
+  onLongPress: PropTypes.func,
 };
 
 GroupListItem.defaultProps = {
   iconName: null,
   description: null,
   onPress: () => null,
+  onLongPress: () => null,
 };
 
 export default GroupListItem;
