@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import FAIcon from 'react-native-vector-icons/FontAwesome';
+import FAIcon from 'react-native-vector-icons/FontAwesome5';
 import Colors from '../constants/Colors';
 
 const Icon = ({
@@ -12,6 +12,7 @@ const Icon = ({
     color={color}
     size={size}
     style={style}
+    brand
   />
 );
 

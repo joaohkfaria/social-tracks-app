@@ -164,7 +164,7 @@ class ListenScreen extends React.Component {
     } catch (error) {
       // Setting previous rate again
       store.setRatings({ ...ratings, [playingSong.id]: ratings[playingSong.id] });
-      showOkAlert('Setting Rating', 'Unable to set rating for this song, please, try again');
+      showOkAlert('Setting Rating', error);
     }
   }
 

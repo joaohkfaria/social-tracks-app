@@ -2,8 +2,8 @@
  * SOCIAL TRACKS CONFIG
  */
 const apiUrl = {
-  // development: 'http://192.168.0.249:3000',
-  development: 'http://18.216.97.224:3000',
+  development: 'http://192.168.0.249:3000',
+  // development: 'http://18.216.97.224:3000',
   production: 'https://social-tracks.herokuapp.com',
 };
 export const API_URL = apiUrl.development;
