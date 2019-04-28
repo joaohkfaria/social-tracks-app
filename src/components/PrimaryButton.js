@@ -21,6 +21,8 @@ const Label = styled(Text)`
   font-size: 14px;
   font-weight: 500;
   margin-left: 10px;
+  text-align: center;
+  flex: 1;
 `;
 
 const PrimaryButton = ({
@@ -28,31 +30,33 @@ const PrimaryButton = ({
   backgroundColor, onPress,
   style,
 }) => (
-  <TouchableHighlight
-    title={title}
-    onPress={onPress}
-    underlayColor="#fff"
-    activeOpacity={0.9}
-    style={{ ...style, borderRadius: 3 }}
-  >
-    <InsideContainer
-      bgColor={backgroundColor}
+  <View style={{ flexDirection: 'column'}}>
+    <TouchableHighlight
+      title={title}
+      onPress={onPress}
+      underlayColor="#fff"
+      activeOpacity={0.9}
+      style={{ ...style, borderRadius: 3 }}
     >
-      {
-        iconName
-        && (
-          <Icon
-            name={iconName}
-            color={Colors.white}
-            size={25}
-          />
-        )
-      }
-      <Label>
-        {title}
-      </Label>
-    </InsideContainer>
-  </TouchableHighlight>
+      <InsideContainer
+        bgColor={backgroundColor}
+      >
+        {
+          iconName
+          && (
+            <Icon
+              name={iconName}
+              color={Colors.white}
+              size={25}
+            />
+          )
+        }
+        <Label>
+          {title}
+        </Label>
+      </InsideContainer>
+    </TouchableHighlight>
+  </View>
 );
 
 PrimaryButton.propTypes = {

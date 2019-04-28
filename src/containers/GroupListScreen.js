@@ -10,10 +10,8 @@ import NoItemText from '../components/NoItemText';
 import ErrorMessage from '../components/ErrorMessage';
 import { selectGroup } from '../services/UsersService';
 
-const ActionContainer = styled(View)`
-  flex-direction: row;
-  width: 100%;
-  justify-content: flex-end;
+const ButtonContainer = styled(View)`
+  align-items: center;
   margin-top: 20px;
 `;
 
@@ -101,12 +99,13 @@ class GroupListScreen extends React.Component {
             onRefresh={this.getGroups}
           />
         </ListContainer>
-        <ActionContainer>
+        <ButtonContainer>
           <PrimaryButton
             title="Create Group"
             onPress={() => navigation.navigate('GroupCreation')}
+            style={{ width: 200 }}
           />
-        </ActionContainer>
+        </ButtonContainer>
       </DefaultLayout>
     );
   }
