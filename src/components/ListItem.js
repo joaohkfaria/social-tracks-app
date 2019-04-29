@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableHighlight } from 'react-native';
 import Colors from '../constants/Colors';
 import Icon from './Icon';
-import Divider from './Divider';
 
 const Container = styled(View)`
   width: 100%;
@@ -36,10 +35,12 @@ const GroupListItem = ({
   description, onPress,
   onLongPress,
 }) => (
-  <TouchableOpacity
+  <TouchableHighlight
     onPress={onPress}
-    activeOpacity={0.7}
     onLongPress={onLongPress}
+    underlayColor="#fff"
+    activeOpacity={0.9}
+    style={{ marginBottom: 2 }}
   >
     <View style={{ flexDirection: 'column', alignItems: 'center' }}>
       <Container>
@@ -61,9 +62,8 @@ const GroupListItem = ({
           </Col>
         </Row>
       </Container>
-      <Divider />
     </View>
-  </TouchableOpacity>
+  </TouchableHighlight>
 );
 
 GroupListItem.propTypes = {

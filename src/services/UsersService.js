@@ -9,7 +9,7 @@ export async function loginSpotify(accessToken) {
   };
   // Fetching API
   const response = await request(API_URL, GET, 'users/login_spotify', params);
-  if (response.error) throw new Error('Error sending token to API');
+  if (response.error) throw new Error(response.error);
 
   return response.result;
 }

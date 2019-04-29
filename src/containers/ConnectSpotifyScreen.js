@@ -37,6 +37,7 @@ class ConnectSpotifyScreen extends React.Component {
       });
       // Trying to get user from Async Storage
       const user = await getUser();
+      console.info({ user, spotify });
       // If the user exists and has a Spotify ID, just go next
       if (spotify && user && user.spotify_id) this.goNext();
       else if (spotify) this.setState({ isLoggedIn: true });
