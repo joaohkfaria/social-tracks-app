@@ -70,7 +70,7 @@ class GroupListScreen extends React.Component {
       await this.getGroups();
     } catch (error) {
       console.info(error);
-      showOkAlert('Error Deleting Group', error);
+      showOkAlert('Error Deleting Group', error.message);
     }
   }
 

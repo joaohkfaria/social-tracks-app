@@ -45,7 +45,7 @@ class ConnectMastodonScreen extends React.Component {
       }
     } catch (error) {
       console.info(error);
-      showOkAlert('Mastodon', error);
+      showOkAlert('Mastodon', error.message);
       // If there's an error, stop loading
       this.setState({ isLoading: false });
     }
@@ -77,7 +77,7 @@ class ConnectMastodonScreen extends React.Component {
       this.goNext();
     } catch (error) {
       console.info(error);
-      showOkAlert('Error', error);
+      showOkAlert('Error', error.message);
       this.setState({ showMastodonAuthorize: false, isLoading: false });
     }
   }
