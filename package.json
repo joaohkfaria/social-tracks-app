@@ -23,7 +23,7 @@
     "react-native-svg-charts": "^5.2.0",
     "react-native-vector-icons": "6.2.0",
     "react-navigation": "3.9.1",
-    "rn-spotify-sdk": "^1.2.6",
+    "rn-spotify-sdk": "^1.2.13",
     "styled-components": "^4.2.0"
   },
   "devDependencies": {
