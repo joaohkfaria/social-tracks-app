@@ -5551,10 +5551,10 @@ react-native-button@^2.3.0:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-events@^1.0.13:
-  version "1.0.14"
-  resolved "https://registry.yarnpkg.com/react-native-events/-/react-native-events-1.0.14.tgz#0ac08f135ffc1939e3e1b0eedd09509c2750e979"
-  integrity sha512-baW2+c1iKVwQUNqz2iZnsbBf61la6VI+0U4dsJpTBUMQCA1lS2yzNJH+AdlaNAOHoiz8bND9X/dsBt4l0cWbAA==
+react-native-events@^1.0.15:
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/react-native-events/-/react-native-events-1.0.15.tgz#d14b75087664ab5b1a8e14e85adda66a4cf328c3"
+  integrity sha512-YRRmiipOKzYUsMa5YPXQ6zp5UyUcvmhcWLBKWFL44BkB8Qap2IPJlv2L87+muE5VxezqGfDLAdCgef9pPVxzdQ==
   dependencies:
     events "^1.1.1"
 
@@ -6018,12 +6018,12 @@ rimraf@~2.2.6:
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
   integrity sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI=
 
-rn-spotify-sdk@^1.2.6:
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/rn-spotify-sdk/-/rn-spotify-sdk-1.2.6.tgz#4146b2270da05819c494e99c4ea4bdb8a37199ae"
-  integrity sha512-hO5Jm9N1UPfCViO90M4+Q7WWdFNLHj3kdkxog/Othr01bTg7YWQEnBnUia2X0i/UeCHLShKfgJRrZnBkfNs85w==
+rn-spotify-sdk@^1.2.13:
+  version "1.2.13"
+  resolved "https://registry.yarnpkg.com/rn-spotify-sdk/-/rn-spotify-sdk-1.2.13.tgz#cf32e3e780e211f7f2602f8ee72fc64bb3a1701d"
+  integrity sha512-gmFUADblFYQ1gJwrE004pI0WAA52hHoinjCv7Vgu83mf3LDj0BeVgJCzsI5YngUgsgRk1vJ1d/AhEkdmToYIeA==
   dependencies:
-    react-native-events "^1.0.13"
+    react-native-events "^1.0.15"
 
 rsvp@^3.3.3:
   version "3.6.2"
