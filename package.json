@@ -13,7 +13,7 @@
     "mobx-react": "^5.4.3",
     "node-fetch": "^2.4.1",
     "prop-types": "^15.7.2",
-    "query-string": "^6.5.0",
+    "query-string": "^6.11.0",
     "react": "16.8.6",
     "react-native": "0.59.5",
     "react-native-gesture-handler": "1.1.0",
